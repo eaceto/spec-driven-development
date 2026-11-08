@@ -1,14 +1,14 @@
 ---
 id: "003"
 title: Spec validator
-status: draft
+status: approved
 tier: standard
 owner: maintainers
 capabilities: [validator, spec-layout]
 ticket:
 docs:
-approved_by:
-approved_at:
+approved_by: Ezequiel Aceto
+approved_at: 2026-11-08
 created: 2026-11-08
 updated: 2026-11-08
 ---
