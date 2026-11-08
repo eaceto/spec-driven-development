@@ -19,6 +19,6 @@
 
 ## Verification
 
-- [ ] T12 First deploy on main succeeds and the address serves the home page; record the run in checklist.md [REQ-004-01]
+- [x] T12 First deploy on main succeeds and the address serves the home page; record the run in checklist.md [REQ-004-01]
 - [ ] T13 A pull request with a deliberate fault fails the checks workflow; record the run [REQ-004-13]
 - [ ] T14 One person who has not used the method follows the site alone to an archived first change; record time and sticking points [success criteria]
