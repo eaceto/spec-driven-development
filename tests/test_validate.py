@@ -645,6 +645,12 @@ class TestInstallAndMeta(ValidatorCase):
         for rule_id in names:
             self.assertIn(f'"{rule_id}"', source, f"no test mentions rule {rule_id}")
 
+    def test_empty_layout_folders_are_tracked_REQ_001_01(self):
+        # Git drops empty directories, so a fresh clone must still see all six entries under specs/.
+        tracked = subprocess.run(["git", "ls-files", "specs"], cwd=ROOT, capture_output=True, text=True).stdout.split()
+        for folder in ("capabilities", "changes", "archive"):
+            self.assertIn(f"specs/{folder}/.gitkeep", tracked, f"specs/{folder} would vanish from a clone")
+
     def test_this_repository_is_clean_REQ_003_20(self):
         violations, stats = V.validate(ROOT)
         self.assertEqual([], [v.format() for v in violations])
