@@ -6,17 +6,18 @@ Maintained by the skills. `sdd-new`, `sdd-plan`, `sdd-verify` and `sdd-archive` 
 
 | # | Title | Status | Tier | Owner | Ticket | Capabilities | Updated |
 |---|---|---|---|---|---|---|---|
-| 004 | [Teaching site on GitHub Pages](changes/004-teaching_site/spec.md) | done | standard | maintainers |  | website, ci | 2026-11-08 |
 
 ## Capabilities
 
 | Id | Title | Owner | Requirements | Updated |
 |---|---|---|---|---|
+| ci | [Ci](capabilities/ci/spec.md) | maintainers | 1 | 2026-11-08 |
 | lifecycle | [Lifecycle](capabilities/lifecycle/spec.md) | maintainers | 8 | 2026-11-08 |
 | skills | [Skills](capabilities/skills/spec.md) | maintainers | 19 | 2026-11-08 |
 | spec-layout | [Spec layout](capabilities/spec-layout/spec.md) | maintainers | 15 | 2026-11-08 |
 | validator | [Validator](capabilities/validator/spec.md) | maintainers | 20 | 2026-11-08 |
+| website | [Website](capabilities/website/spec.md) | maintainers | 12 | 2026-11-08 |
 
 ## Archived changes
 
-4 archived. See `specs/archive/`.
+5 archived. See `specs/archive/`.

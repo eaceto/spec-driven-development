@@ -1,7 +1,7 @@
 ---
 id: "004"
 title: Teaching site on GitHub Pages
-status: done
+status: archived
 tier: standard
 owner: maintainers
 capabilities: [website, ci]
