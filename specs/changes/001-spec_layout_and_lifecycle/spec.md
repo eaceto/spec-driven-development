@@ -1,14 +1,14 @@
 ---
 id: "001"
 title: Spec layout and lifecycle
-status: draft
+status: in-progress
 tier: standard
 owner: maintainers
 capabilities: [spec-layout, lifecycle]
 ticket:
 docs:
-approved_by:
-approved_at:
+approved_by: Ezequiel Aceto
+approved_at: 2026-11-08
 created: 2026-11-08
 updated: 2026-11-08
 ---

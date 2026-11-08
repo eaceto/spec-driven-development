@@ -20,4 +20,4 @@
 - [ ] T10 Walk a newcomer through creating a change from the templates using only `docs/method.md`, and time it [success criteria]
 - [ ] T11 Have an agent read `AGENTS.md` and work on this change; confirm it loads only the constitution, the index and this change [REQ-001-22]
 - [ ] T12 Check every rule in `docs/method.md` against this requirements file; add a requirement for any rule without one [success criteria]
-- [ ] T13 Review and approve `spec.md`; fill `approved_by` and `approved_at` [REQ-001-17]
+- [x] T13 Review and approve `spec.md`; fill `approved_by` and `approved_at` [REQ-001-17]

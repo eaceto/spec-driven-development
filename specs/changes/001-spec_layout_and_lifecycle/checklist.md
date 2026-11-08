@@ -6,8 +6,8 @@
 - [x] Scope lists at least one explicit non-goal
 - [x] Every success criterion is observable
 - [x] Capabilities touched are listed in the frontmatter
-- [ ] The owner of each touched capability has reviewed spec.md
-- [ ] approved_by and approved_at are filled in
+- [x] The owner of each touched capability has reviewed spec.md
+- [x] approved_by and approved_at are filled in
 
 ## Gate 2: done
 
