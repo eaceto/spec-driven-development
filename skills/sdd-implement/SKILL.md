@@ -2,7 +2,7 @@
 name: sdd-implement
 description: Implement the next task of an in-progress change in a project that uses spec-driven development. Takes the first unticked task, implements it with tests that reference its requirement IDs, commits with Change and Requirements trailers, ticks the task and stops. Writes nothing when a task contradicts or lacks a requirement. Use when asked to implement, build or continue work on a change.
 metadata:
-  sdd_version: 0.2.0
+  sdd_version: 0.2.2
 ---
 
 # sdd-implement
