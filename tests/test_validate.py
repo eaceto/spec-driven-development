@@ -646,10 +646,13 @@ class TestInstallAndMeta(ValidatorCase):
             self.assertIn(f'"{rule_id}"', source, f"no test mentions rule {rule_id}")
 
     def test_empty_layout_folders_are_tracked_REQ_001_01(self):
-        # Git drops empty directories, so a fresh clone must still see all six entries under specs/.
-        tracked = subprocess.run(["git", "ls-files", "specs"], cwd=ROOT, capture_output=True, text=True).stdout.split()
-        for folder in ("capabilities", "changes", "archive"):
-            self.assertIn(f"specs/{folder}/.gitkeep", tracked, f"specs/{folder} would vanish from a clone")
+        # Git drops empty directories, so a fresh clone must still see all six entries under specs/,
+        # in this repository and in every example project.
+        tracked = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True, text=True).stdout.split()
+        for project in [Path("."), *sorted(p.relative_to(ROOT) for p in (ROOT / "examples").iterdir() if p.is_dir())]:
+            for folder in ("capabilities", "changes", "archive"):
+                prefix = f"{(project / 'specs' / folder).as_posix().removeprefix('./')}/"
+                self.assertTrue(any(f.startswith(prefix) for f in tracked), f"{prefix} would vanish from a clone")
 
     def test_this_repository_is_clean_REQ_003_20(self):
         violations, stats = V.validate(ROOT)
