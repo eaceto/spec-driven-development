@@ -107,4 +107,4 @@ Change: 001"
 
 In a team, the approval is a pull request containing only this page, reviewed by the owner of the `notes` capability. Here you are both.
 
-Next: 4. Plan it.
+Next: [4. Plan it](04-plan.md).

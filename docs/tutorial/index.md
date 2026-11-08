@@ -13,7 +13,7 @@ You will take one small change from nothing to an archived capability, with an a
 1. [Install the skills](01-install.md), one script.
 2. [Set up the project](02-init.md): the agent asks four questions and writes the constitution.
 3. [Start a change](03-new.md): the agent writes the one page that says why and what, and you approve it.
-4. Plan it: requirements with scenarios, a design, tasks.
+4. [Plan it](04-plan.md): requirements with scenarios, a design, tasks.
 5. Implement a task: one task, tests that name the requirement, a commit with trailers.
 6. Verify and archive: the Gate 2 checklist with evidence, then the merge into a living capability.
 
