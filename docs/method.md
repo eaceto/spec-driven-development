@@ -76,7 +76,7 @@ Change directories are `NNN-name_of_change`: three digits, a dash, then lowercas
 
 In a team, two people can pick the same number on separate branches. The claim rule prevents it: **the first thing merged to the main branch for a change is its directory with `spec.md` alone.** The number is taken at that moment. If two claims collide, the one merged later is renumbered. A validator flags duplicates.
 
-Documented variant: `numbering: ticket` in the constitution, where the directory is `ABC-123-name_of_change` and the number comes from your tracker.
+Documented variant: `numbering: ticket` in the constitution, where the directory is `ABC-123-name_of_change` and the number comes from your tracker. The validator does not accept this form yet; it is planned as a later change, so use sequential numbering until then.
 
 ## Ownership and approval
 
@@ -149,11 +149,11 @@ Across repositories a change is `repo-name:014` and a requirement is `repo-name:
 ## Scale
 
 - Changes are a flat list. Status lives in frontmatter. `INDEX.md` is generated and is what people and agents read.
-- Links refer to numbers, never paths, so moving a change to the archive breaks nothing.
+- References in prose, commits and tickets use the change number, never the path, so moving a change to the archive breaks nothing. The index is regenerated at every step, so its links never go stale.
 - The loading rule for agents and people: constitution, index, one change, and only the capabilities that change lists.
 - The archive is cold storage. Nothing loads it unless asked.
 
-Documented variant: once a project passes roughly thirty active capabilities, group capability folders by domain, such as `capabilities/payments/refunds/`. Do not group earlier.
+Documented variant: once a project passes roughly thirty active capabilities, group capability folders by domain, such as `capabilities/payments/refunds/`. Do not group earlier. The validator does not accept nested capability folders yet; it is planned together with the ticket numbering variant.
 
 ## Adopting in an existing project
 
