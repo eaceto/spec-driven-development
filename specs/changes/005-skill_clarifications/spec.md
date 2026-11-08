@@ -1,14 +1,14 @@
 ---
 id: "005"
 title: Skill clarifications from the first tutorial run
-status: draft
+status: approved
 tier: quick
 owner: maintainers
 capabilities: [skills]
 ticket:
 docs:
-approved_by:
-approved_at:
+approved_by: Ezequiel Aceto
+approved_at: 2026-11-08
 created: 2026-11-08
 updated: 2026-11-08
 ---
