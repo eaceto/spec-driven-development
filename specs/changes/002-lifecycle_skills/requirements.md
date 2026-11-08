@@ -29,12 +29,12 @@ No skill body SHALL contain a tool-specific path, command or product name; tool-
 - THEN no match is found
 
 ### REQ-002-04: Install locations
-When skills are installed into a project, the install step SHALL copy each skill directory to `.agents/skills/<name>/` and `.claude/skills/<name>/` in that project and SHALL write the installed version into `sdd_version` in the project's constitution frontmatter.
+When skills are installed into a project, the install step SHALL copy each skill directory to `.agents/skills/<name>/` and `.claude/skills/<name>/` in that project, SHALL write the installed version into `sdd_version` in the project's constitution frontmatter, and SHALL create any agent-specific entry file that points to `AGENTS.md` for agents that do not read `AGENTS.md` themselves.
 
 #### Scenario: Fresh install
 - GIVEN a project with `specs/constitution.md` and no skills
 - WHEN the install step runs for version 0.1.0
-- THEN both locations contain the six skill directories and the constitution reads `sdd_version: 0.1.0`
+- THEN both locations contain the six skill directories, the constitution reads `sdd_version: 0.1.0`, and any agent-specific entry file the install step knows about points to `AGENTS.md`
 
 ### REQ-002-05: Loading rule in skills
 Every skill except `sdd-init` SHALL read only `specs/constitution.md`, `specs/INDEX.md`, the target change directory, the templates, and the capability specs listed in the target change's frontmatter.
@@ -58,7 +58,7 @@ Every skill that acts on a change SHALL read the change's status before acting a
 - THEN it writes nothing and reports that the change must reach done through `sdd-verify`
 
 ### REQ-002-07: Init for a new project
-When `sdd-init` runs in a project without `specs/`, it SHALL create the layout required by REQ-001-01, copy the templates, write the constitution from the template using answers to at most five questions, write an empty index, and write an `AGENTS.md` containing the loading rule with a `CLAUDE.md` that points to it.
+When `sdd-init` runs in a project without `specs/`, it SHALL create the layout required by REQ-001-01, copy the templates, write the constitution from the template using answers to at most five questions, write an empty index, and write an `AGENTS.md` containing the loading rule. Agent-specific entry files are the install step's concern, per REQ-002-04.
 
 #### Scenario: Empty repository
 - GIVEN a repository with no `specs/` directory

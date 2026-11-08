@@ -19,7 +19,7 @@ Templates are not bundled with the skills. A skill reads `specs/templates/` from
 ### Decision: Self-contained skills, templates from the project
 - Chosen: each `SKILL.md` holds every rule it needs; templates are read from the project's `specs/templates/`.
 - Alternatives considered: a shared reference file installed beside the skills; templates bundled inside each skill directory.
-- Why: the Agent Skills format resolves files relative to the skill's own directory, so cross-skill references are not portable. Bundled templates would drift from the project's copy. The cost is some repetition of frontmatter field lists across skills, bounded by the 150-line limit.
+- Why: the Agent Skills format resolves files relative to the skill's own directory, so cross-skill references are not portable. Bundled templates would drift from the project's copy. `sdd-init` is the one exception: the install step bundles the templates into its installed copy, because it runs before the project has any. The cost is some repetition of frontmatter field lists across skills, bounded by the 150-line limit.
 - Requirements affected: REQ-002-01, REQ-002-05
 
 ### Decision: Copy on install, not symlink
@@ -51,7 +51,7 @@ Templates are not bundled with the skills. A skill reads `specs/templates/` from
 - `skills/<name>/SKILL.md` frontmatter: `name`, `description`, `metadata.version`, `metadata.sdd_version`.
 - Body sections in order: When to use, Preconditions, Steps, Refuse when, Done when.
 - `install.sh <target-project> [version]`: copies `skills/*` to both locations and sets `sdd_version` in `<target>/specs/constitution.md`.
-- Validator hook: a skill checks for an installed validator at a path change 003 will fix, runs it if present, and reports its output.
+- Validator hook: an optional `validator` key in the constitution frontmatter holds the command to run. Skills run it when present and report its output; absent means no validator. Change 003 sets the key when it installs the validator.
 
 ## Risks
 
