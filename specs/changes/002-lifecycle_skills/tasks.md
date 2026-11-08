@@ -2,7 +2,7 @@
 
 ## Setup
 
-- [ ] T01 Create `skills/` with a README stating the format, the section order and the line limit [REQ-002-01, REQ-002-02, REQ-002-03]
+- [x] T01 Create `skills/` with a README stating the format, the section order and the line limit [REQ-002-01, REQ-002-02, REQ-002-03]
 
 ## Implementation
 

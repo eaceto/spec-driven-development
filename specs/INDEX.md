@@ -1,6 +1,6 @@
 # Spec index
 
-Maintained by the index skill. Until that skill exists, update this file in the same pull request as the change it describes.
+Maintained by the skills. `sdd-new`, `sdd-plan`, `sdd-verify` and `sdd-archive` update it; do not edit it by hand.
 
 ## Active changes
 
