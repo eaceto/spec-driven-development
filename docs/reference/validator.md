@@ -27,6 +27,8 @@ Layout, change naming and numbering, the files each tier requires, the order of 
 
 ## What it does not check
 
+Whether a test proves its scenario. The coverage rule counts a requirement as tested when its id appears in a test file; that is the floor a machine can check, and judgement is the reviewer's.
+
 Whether a purpose is well written, a scenario is meaningful or a design decision is sound. Those remain with people and the skills' refuse-when sections.
 
 ## In continuous integration

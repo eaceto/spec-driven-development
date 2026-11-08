@@ -47,7 +47,7 @@ stateDiagram-v2
 | Gate | From | To | Condition |
 |---|---|---|---|
 | 1 | draft | approved | `spec.md` is merged to the main branch through a pull request reviewed by the owner of every capability it touches. `approved_by` and `approved_at` are filled in. |
-| 2 | in-progress | done | Every checklist item for Gate 2 is ticked. Every requirement ID is covered by a test or listed as not testable with a reason. |
+| 2 | in-progress | done | Every checklist item for Gate 2 is ticked. Every requirement ID is covered by a test or listed as not testable with a reason. An id in a test file is the floor the validator can check; whether the test proves the scenario is judgement, and the reviewer's. |
 | 3 | done | archived | The archive step has merged requirements into capability specs, moved the change to `specs/archive/`, and regenerated the index. |
 
 Design and code do not start before Gate 1. Status fields are changed by the gates and the archive step, not by hand.
@@ -104,6 +104,8 @@ Requirements: REQ-014-01, REQ-014-03
 - Pull request titles start with the change number, `014: Passwordless login`, so reviewers see it in the list.
 
 `git log --grep "^Change: 014"` returns a change's history. `git interpret-trailers --parse` extracts the IDs for tooling.
+
+A squash merge keeps the `Change:` trailer in the squashed message and lists every `Requirements:` id the squashed commits delivered, so the trail survives the squash.
 
 ## Tickets and documents
 
