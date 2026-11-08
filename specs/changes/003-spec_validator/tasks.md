@@ -13,7 +13,7 @@
 - [x] T06 Status consistency rules, including coverage search and backward moves against git [REQ-003-13]
 - [x] T07 Index rule [REQ-003-14]
 - [x] T08 Constitution and entry file rules [REQ-003-15]
-- [ ] T09 Commit trailer rule [REQ-003-16]
+- [x] T09 Commit trailer rule [REQ-003-16]
 - [ ] T10 Skills rules [REQ-003-17]
 - [ ] T11 `tests/test_validate.py` with template-built fixtures, one passing and one failing case per rule [REQ-003-19]
 - [ ] T12 `install.sh` copies the validator and sets the `validator` key; set the key in this repository's constitution; document in `docs/method.md` and the skills README [REQ-003-18]

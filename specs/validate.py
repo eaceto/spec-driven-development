@@ -862,6 +862,20 @@ def check_agents_file(project: Project) -> Iterator[Violation]:
             yield Violation("AGENTS.md", "agents-file", ["REQ-001-22"], f"does not mention {needle}")
 
 
+# --- Commit trailers ---
+
+@rule("commit-trailers", ["REQ-001-23"], "recent commits touching a change carry its Change: trailer (git)")
+def check_commit_trailers(project: Project) -> Iterator[Violation]:
+    if not project.git:
+        return
+    pattern = re.compile(re.escape(project.git_prefix) + r"specs/(?:changes|archive)/(\d{3})-")
+    for sha, message, files in project.recent_commits():
+        touched = {m.group(1) for f in files for m in [pattern.match(f)] if m}
+        declared = set(TRAILER_RE.findall(message))
+        for num in sorted(touched - declared):
+            yield Violation(f"commit {sha[:7]}", "commit-trailers", ["REQ-001-23"], f"touches change {num} without a 'Change: {num}' trailer")
+
+
 # ---------------------------------------------------------------------------
 # Running
 
