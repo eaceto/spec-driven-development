@@ -876,6 +876,47 @@ def check_commit_trailers(project: Project) -> Iterator[Violation]:
             yield Violation(f"commit {sha[:7]}", "commit-trailers", ["REQ-001-23"], f"touches change {num} without a 'Change: {num}' trailer")
 
 
+# --- Skills, when the project ships them ---
+
+@rule("skills", ["REQ-002-01", "REQ-002-02", "REQ-002-03"],
+      "skills/<name>/SKILL.md: within 150 lines, frontmatter complete, five sections in order, vendor-neutral body")
+def check_skills(project: Project) -> Iterator[Violation]:
+    skills = project.root / "skills"
+    if not skills.is_dir():
+        return
+    for d in _visible(skills):
+        if not d.is_dir():
+            continue
+        rel = f"skills/{d.name}/SKILL.md"
+        text = _read(project, d / "SKILL.md") if (d / "SKILL.md").is_file() else None
+        if text is None:
+            yield Violation(f"skills/{d.name}", "skills", ["REQ-002-01"], "no SKILL.md")
+            continue
+        count = len(text.splitlines())
+        if count > SKILL_MAX_LINES:
+            yield Violation(rel, "skills", ["REQ-002-01"], f"{count} lines, limit {SKILL_MAX_LINES}")
+        fm, body, err = parse_frontmatter(text)
+        if err:
+            yield Violation(rel, "skills", ["REQ-002-01"], err)
+            continue
+        fm = fm or {}
+        if fm.get("name") != d.name:
+            yield Violation(rel, "skills", ["REQ-002-01"], f"name is {fm.get('name')!r} but the directory is {d.name}")
+        for key in ("description", "metadata.version", "metadata.sdd_version"):
+            if not fm.get(key):
+                yield Violation(rel, "skills", ["REQ-002-01"], f"missing {key}")
+        h2 = [s[0] for s in _h2_sections(body.splitlines())]
+        if h2 != SKILL_SECTIONS:
+            yield Violation(rel, "skills", ["REQ-002-02"], f"sections are {h2}; expected {SKILL_SECTIONS}")
+        lowered = body.lower()
+        for term in VENDOR_PATHS:
+            if term in lowered:
+                yield Violation(rel, "skills", ["REQ-002-03"], f"body mentions {term}; tool-specific paths belong in the install step")
+        m = VENDOR_NAMES.search(body)
+        if m:
+            yield Violation(rel, "skills", ["REQ-002-03"], f"body names {m.group(1)}; skills are vendor-neutral")
+
+
 # ---------------------------------------------------------------------------
 # Running
 
