@@ -36,6 +36,7 @@ TIER_FILES: Dict[str, Set[str]] = {
 }
 SPECS_ENTRIES = {"constitution.md", "INDEX.md", "templates", "capabilities", "changes", "archive"}
 SPECS_OPTIONAL = {"validate.py"}
+IGNORED_ENTRIES = {"__pycache__"}  # build artefacts the layout rule never reports
 CHANGE_FM_KEYS = ["id", "title", "status", "tier", "owner", "capabilities", "ticket", "docs",
                   "approved_by", "approved_at", "created", "updated"]
 CONSTITUTION_FM_KEYS = ["extends", "version", "owner", "numbering", "sdd_version"]
@@ -469,7 +470,7 @@ def rule(rule_id: str, reqs: Sequence[str], description: str, scope: str = "proj
 
 @rule("layout-entries", ["REQ-001-01", "REQ-001-02"], "specs/ holds the six entries and optionally validate.py; changes/ and archive/ hold only change directories")
 def check_layout(project: Project) -> Iterator[Violation]:
-    names = {p.name for p in _visible(project.specs)}
+    names = {p.name for p in _visible(project.specs)} - IGNORED_ENTRIES
     for missing in sorted(SPECS_ENTRIES - names):
         yield Violation("specs", "layout-entries", ["REQ-001-01"], f"missing {missing}")
     for extra in sorted(names - SPECS_ENTRIES - SPECS_OPTIONAL):
