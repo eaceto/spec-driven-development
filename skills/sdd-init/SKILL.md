@@ -14,7 +14,7 @@ The project has no `specs/` directory and wants to adopt spec-driven development
 ## Preconditions
 
 - You are at the project root.
-- `specs/` does not exist.
+- `specs/` does not exist, or exists and is empty.
 - This skill's `templates/` directory is present. The install step bundles it.
 
 ## Steps
@@ -38,7 +38,7 @@ The project has no `specs/` directory and wants to adopt spec-driven development
 
 ## Refuse when
 
-- `specs/` already exists. Say so and stop.
+- `specs/` already exists and is not empty. Say so and stop.
 - You are asked to write requirements for existing code. The capability map holds purpose only. Requirements enter through changes, starting with the next thing the team was going to build anyway.
 - A proposed principle cannot be traced to existing material in an existing project. Leave it out and say so.
 

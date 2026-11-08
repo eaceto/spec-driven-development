@@ -30,7 +30,7 @@ A change is planned and has unticked tasks.
 ## Refuse when
 
 - The status does not allow it, as in step 1.
-- The task cites no requirement ID and is not marked setup. Report the missing requirement instead of guessing.
+- The task cites no requirement ID and is not marked setup, or cites an ID that no requirement defines. Report the missing requirement instead of guessing.
 - `guardrails.md` says to stop and ask in this situation.
 - The work touches a capability the change does not list.
 - Asked to tick a task whose tests do not exist or do not pass.
