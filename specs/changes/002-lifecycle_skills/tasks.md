@@ -14,7 +14,7 @@
 - [x] T07 Write `skills/sdd-archive/SKILL.md` [REQ-002-16, REQ-002-17, REQ-002-18]
 - [x] T08 Add status preconditions, the loading rule and the validator hook to every skill [REQ-002-05, REQ-002-06, REQ-002-19]
 - [x] T09 Write `install.sh` and the install section in `docs/method.md` [REQ-002-04]
-- [ ] T10 Install the skills into this repository and update `AGENTS.md` to name them [REQ-002-04]
+- [x] T10 Install the skills into this repository and update `AGENTS.md` to name them [REQ-002-04]
 
 ## Verification
 
