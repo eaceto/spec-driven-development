@@ -21,6 +21,6 @@
 
 ## Verification
 
-- [ ] T14 Every REQ-003 id and every REQ-001 id named by a rule appears in `tests/test_validate.py`; the suite passes [all]
-- [ ] T15 `--rules` output lists every structural requirement of change 001 [REQ-003-04]
-- [ ] T16 Documentation: method document names the validator, its command, exit codes and the `validator` key [all]
+- [x] T14 Every REQ-003 id and every REQ-001 id named by a rule appears in `tests/test_validate.py`; the suite passes [all]
+- [x] T15 `--rules` output lists every structural requirement of change 001 [REQ-003-04]
+- [x] T16 Documentation: method document names the validator, its command, exit codes and the `validator` key [all]
