@@ -2,7 +2,7 @@
 
 ## Setup
 
-- [ ] T01 `mkdocs.yml`, `requirements-site.txt`, a home page skeleton; local strict build in a scratch virtual environment [REQ-004-02, REQ-004-11, REQ-004-12]
+- [x] T01 `mkdocs.yml`, `requirements-site.txt`, a home page skeleton; local strict build in a scratch virtual environment [REQ-004-02, REQ-004-11, REQ-004-12]
 
 ## Implementation
 

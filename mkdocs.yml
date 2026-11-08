@@ -1,0 +1,67 @@
+site_name: Spec-driven development
+site_description: A method, templates, skills and a validator for spec-driven development, for one developer or many teams.
+site_url: https://eaceto.github.io/spec-driven-development/
+repo_url: https://github.com/eaceto/spec-driven-development
+repo_name: eaceto/spec-driven-development
+edit_uri: edit/main/docs/
+docs_dir: docs
+strict: true
+exclude_docs: |
+  _hooks/
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - content.tabs.link
+    - content.code.copy
+    - toc.follow
+    - search.suggest
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+
+hooks:
+  - docs/_hooks/generate.py
+
+nav:
+  - Home: index.md
+  - Reference:
+      - The method: method.md
+      - Skills:
+          - Overview: skills/index.md
+          - sdd-init: skills/sdd-init.md
+          - sdd-new: skills/sdd-new.md
+          - sdd-plan: skills/sdd-plan.md
+          - sdd-implement: skills/sdd-implement.md
+          - sdd-verify: skills/sdd-verify.md
+          - sdd-archive: skills/sdd-archive.md
+      - Templates: reference/templates.md
+      - Validator rules: reference/validator-rules.md
