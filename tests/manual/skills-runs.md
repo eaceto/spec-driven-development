@@ -27,3 +27,4 @@ Open observations from the runs, each a candidate improvement rather than a fail
 
 - The trial's first commit held spec and plan together. The claim rule asks for spec.md alone to be merged first; the skills say so, but an agent that commits only at the end hides it. A later change could make `sdd-new` commit the claim itself.
 - The trial's index linked the capability id rather than the title; fixed in the skills on 2026-11-08.
+- `sdd-archive` describes the merge for changes with a `requirements.md`. A quick change has none; its listed capabilities should still receive a History line. Done by hand for change 005 on 2026-11-08; a later quick change should say so in the skill.
