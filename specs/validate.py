@@ -211,7 +211,6 @@ class Project:
     capabilities: List[Capability] = field(default_factory=list)
     stray_entries: List[str] = field(default_factory=list)  # visible non-directories in changes/ or archive/
     git: bool = False
-    git_prefix: str = ""
     files_read: int = 0
     _corpus: Optional[str] = None
 
@@ -252,7 +251,7 @@ class Project:
 
     def git_previous_status(self, change: Change) -> Optional[str]:
         for location in ("changes", "archive"):
-            text = self.git_run("show", f"HEAD:{self.git_prefix}specs/{location}/{change.dirname}/spec.md")
+            text = self.git_run("show", f"HEAD:specs/{location}/{change.dirname}/spec.md")
             if text is not None:
                 fm, _, _ = parse_frontmatter(text)
                 return str(fm.get("status", "")) if fm else None
@@ -433,11 +432,11 @@ def load_project(root: Path) -> Project:
             project.capabilities.append(load_capability(project, entry))
     top = project.git_run("rev-parse", "--show-toplevel")
     if top:
-        project.git = True
+        # Git checks apply only when the project root is the repository root. A project nested inside
+        # another repository, such as an example, has no commit history of its own to judge.
         try:
-            prefix = root.resolve().relative_to(Path(top.strip()).resolve())
-            project.git_prefix = "" if str(prefix) == "." else f"{prefix.as_posix()}/"
-        except ValueError:
+            project.git = root.resolve() == Path(top.strip()).resolve()
+        except OSError:
             project.git = False
     return project
 
@@ -870,7 +869,7 @@ def check_agents_file(project: Project) -> Iterator[Violation]:
 def check_commit_trailers(project: Project) -> Iterator[Violation]:
     if not project.git:
         return
-    pattern = re.compile(re.escape(project.git_prefix) + r"specs/(?:changes|archive)/(\d{3})-")
+    pattern = re.compile(r"specs/(?:changes|archive)/(\d{3})-")
     for sha, message, files in project.recent_commits():
         touched = {m.group(1) for f in files for m in [pattern.match(f)] if m}
         declared = set(TRAILER_RE.findall(message))

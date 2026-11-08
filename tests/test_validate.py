@@ -536,6 +536,19 @@ class TestGitAndSkills(ValidatorCase):
         found = self.assert_violation(self.run_validator(), "commit-trailers", "REQ-001-23", text="touches change 014")
         self.assertTrue(found[0].path.startswith("commit "))
 
+    @unittest.skipUnless(GIT, "git not available")
+    def test_nested_project_skips_git_checks_REQ_003_13_REQ_003_16(self):
+        self.fx.add_change(status="done")
+        self.fx.add_tests_mentioning(self.fx.change_ids("014"))
+        self.fx.git_init_and_commit("Done\n\nChange: 014")
+        nested = self.fx.root / "examples" / "inner"
+        nested.mkdir(parents=True)
+        shutil.copytree(self.fx.specs, nested / "specs")
+        (nested / "AGENTS.md").write_text((self.fx.root / "AGENTS.md").read_text())
+        violations, stats = V.validate(nested)
+        self.assertFalse(stats["git"], "a project nested in another repository has no history of its own")
+        self.assert_no_violation(violations, "commit-trailers")
+
     def test_skills_REQ_003_17_REQ_002_01_REQ_002_02_REQ_002_03(self):
         skills = self.fx.root / "skills"
         shutil.copytree(ROOT / "skills" / "sdd-new", skills / "sdd-new")
