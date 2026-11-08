@@ -465,6 +465,66 @@ def rule(rule_id: str, reqs: Sequence[str], description: str, scope: str = "proj
     return register
 
 
+# --- Layout, naming, numbering and tiers ---
+
+@rule("layout-entries", ["REQ-001-01", "REQ-001-02"], "specs/ holds the six entries and optionally validate.py; changes/ and archive/ hold only change directories")
+def check_layout(project: Project) -> Iterator[Violation]:
+    names = {p.name for p in _visible(project.specs)}
+    for missing in sorted(SPECS_ENTRIES - names):
+        yield Violation("specs", "layout-entries", ["REQ-001-01"], f"missing {missing}")
+    for extra in sorted(names - SPECS_ENTRIES - SPECS_OPTIONAL):
+        yield Violation(f"specs/{extra}", "layout-entries", ["REQ-001-01"], "not part of the layout")
+    for stray in project.stray_entries:
+        yield Violation(stray, "layout-entries", ["REQ-001-02"], "only change directories belong here")
+
+
+@rule("change-dirname", ["REQ-001-02"], "change directories are named NNN-name_of_change", "change")
+def check_change_dirname(project: Project, ch: Change) -> Iterator[Violation]:
+    if ch.num is None:
+        yield Violation(ch.rel, "change-dirname", ["REQ-001-02"],
+                        "expected NNN-name_of_change: three digits, a dash, lowercase words joined by underscores")
+
+
+@rule("change-id", ["REQ-001-02", "REQ-001-07"], "the id in spec.md equals the directory prefix", "change")
+def check_change_id(project: Project, ch: Change) -> Iterator[Violation]:
+    if ch.num and ch.fm and str(ch.fm.get("id", "")) != ch.num:
+        yield Violation(f"{ch.rel}/spec.md", "change-id", ["REQ-001-02", "REQ-001-07"],
+                        f"id is {ch.fm.get('id')!r} but the directory says {ch.num}")
+
+
+@rule("change-number-unique", ["REQ-001-03", "REQ-001-18"], "no two changes share a number across changes/ and archive/")
+def check_number_unique(project: Project) -> Iterator[Violation]:
+    by_num: Dict[str, List[Change]] = {}
+    for ch in project.changes:
+        if ch.num:
+            by_num.setdefault(ch.num, []).append(ch)
+    for num, group in sorted(by_num.items()):
+        if len(group) > 1:
+            for ch in group:
+                others = ", ".join(o.rel for o in group if o is not ch)
+                yield Violation(ch.rel, "change-number-unique", ["REQ-001-03", "REQ-001-18"],
+                                f"number {num} is also used by {others}; renumber the one merged later")
+
+
+@rule("change-files", ["REQ-001-04", "REQ-001-05"], "a change holds exactly the files its tier requires", "change")
+def check_change_files(project: Project, ch: Change) -> Iterator[Violation]:
+    if "spec.md" not in ch.files:
+        yield Violation(ch.rel, "change-files", ["REQ-001-04"], "no spec.md")
+        return
+    allowed = TIER_FILES.get(ch.tier)
+    if allowed is None:
+        return  # the frontmatter rule reports the tier
+    for extra in sorted(ch.files - allowed):
+        if ch.tier == "quick" and extra == "requirements.md":
+            yield Violation(f"{ch.rel}/{extra}", "change-files", ["REQ-001-04", "REQ-001-05"],
+                            "a quick change may not add, modify or remove requirements; raise the tier to standard")
+        else:
+            yield Violation(f"{ch.rel}/{extra}", "change-files", ["REQ-001-04"], f"not allowed in a {ch.tier} change")
+    if ch.status in ("in-progress", "done", "archived"):
+        for missing in sorted(allowed - ch.files):
+            yield Violation(ch.rel, "change-files", ["REQ-001-04"], f"{ch.tier} change lacks {missing}")
+
+
 # ---------------------------------------------------------------------------
 # Running
 
