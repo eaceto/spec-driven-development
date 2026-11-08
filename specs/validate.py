@@ -578,6 +578,65 @@ def check_spec_frontmatter(project: Project, ch: Change) -> Iterator[Violation]:
         yield Violation(path, "spec-frontmatter", ["REQ-001-17"], f"status {ch.status} requires approved_by and approved_at")
 
 
+# --- Requirement grammar, grouping and id discipline within a change ---
+
+@rule("requirement-grammar", ["REQ-001-08", "REQ-001-10"],
+      "each requirement has one SHALL statement and scenarios with GIVEN, WHEN, THEN; added ids carry the change number; modified ones say Changed in; ids are unique", "change")
+def check_requirement_grammar(project: Project, ch: Change) -> Iterator[Violation]:
+    if "requirements.md" not in ch.files:
+        return
+    path = f"{ch.rel}/requirements.md"
+    seen: Set[str] = set()
+    for r in ch.requirements:
+        if r.id in seen:
+            yield Violation(path, "requirement-grammar", ["REQ-001-10"], f"{r.id} appears twice")
+        seen.add(r.id)
+        shall = [s for s in r.statements if "SHALL" in s]
+        if len(shall) != 1:
+            yield Violation(path, "requirement-grammar", ["REQ-001-08"], f"{r.id}: expected one SHALL statement, found {len(shall)}")
+        if not r.scenarios:
+            yield Violation(path, "requirement-grammar", ["REQ-001-08"], f"{r.id}: no scenario")
+        for n, sc in enumerate(r.scenarios, 1):
+            missing = [k for k in ("GIVEN", "WHEN", "THEN") if k not in sc]
+            if missing:
+                yield Violation(path, "requirement-grammar", ["REQ-001-08"], f"{r.id} scenario {n}: missing {', '.join(missing)}")
+        if r.section.startswith("capability:") and ch.num and r.change != ch.num:
+            yield Violation(path, "requirement-grammar", ["REQ-001-08"], f"{r.id}: an added requirement is numbered REQ-{ch.num}-xx")
+        if r.section == "modified" and ch.num and ch.num not in r.changed_in:
+            yield Violation(path, "requirement-grammar", ["REQ-001-08", "REQ-001-10"], f"{r.id}: a modified requirement needs 'Changed in: {ch.num}'")
+
+
+@rule("requirement-grouping", ["REQ-001-09"],
+      "capability sections match the frontmatter; every requirement sits under a Capability or Modified section; trailing sections present", "change")
+def check_requirement_grouping(project: Project, ch: Change) -> Iterator[Violation]:
+    if "requirements.md" not in ch.files:
+        return
+    path = f"{ch.rel}/requirements.md"
+    listed = set(ch.capabilities)
+    for cap in ch.capability_sections:
+        if cap not in listed:
+            yield Violation(path, "requirement-grouping", ["REQ-001-09"], f"'Capability: {cap}' is not in the frontmatter capabilities {sorted(listed)}")
+    for r in ch.requirements:
+        if not r.section:
+            yield Violation(path, "requirement-grouping", ["REQ-001-09"], f"{r.id}: outside any Capability or Modified requirements section")
+    for name in REQUIREMENTS_TRAILING_SECTIONS:
+        if name not in ch.req_sections:
+            yield Violation(path, "requirement-grouping", ["REQ-001-09"], f"missing section '{name}'")
+
+
+@rule("requirement-id-new", ["REQ-001-10"], "an added requirement id is not already used by a capability", "change")
+def check_requirement_id_new(project: Project, ch: Change) -> Iterator[Violation]:
+    if ch.status == "archived" or "requirements.md" not in ch.files:
+        return
+    path = f"{ch.rel}/requirements.md"
+    active, retired = project.active_ids(), project.retired_ids()
+    for r in ch.added():
+        if r.id in active:
+            yield Violation(path, "requirement-id-new", ["REQ-001-10"], f"{r.id} already exists in capability {active[r.id][0].dirname}; ids are never reused")
+        elif r.id in retired:
+            yield Violation(path, "requirement-id-new", ["REQ-001-10"], f"{r.id} is retired in capability {retired[r.id].dirname}; ids are never reused")
+
+
 # ---------------------------------------------------------------------------
 # Running
 
