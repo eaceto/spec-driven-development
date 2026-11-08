@@ -1,7 +1,7 @@
 ---
 id: "009"
 title: Site improvements from the first review
-status: in-progress
+status: done
 tier: standard
 owner: maintainers
 capabilities: [website]

@@ -11,12 +11,13 @@
 
 ## Gate 2: done
 
-- [ ] Every success criterion in spec.md is met
-- [ ] Every task in tasks.md is ticked
-- [ ] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
-- [ ] No open questions remain in design.md
-- [ ] Constitution principles that applied were checked, and none was violated
-- [ ] Documentation that users or operators rely on is updated
+- [x] Every success criterion in spec.md is met
+  - Evidence, 2026-11-08: a test forbids the three product names across docs and README; the home page's first screen is tested for the agent definition, the why block and the prerequisites; step 3 holds the recorded refusal and all steps are under 1000 words; adoption and questions pages exist in the navigation; 62 tests, strict build and validator green.
+- [x] Every task in tasks.md is ticked
+- [x] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
+- [x] No open questions remain in design.md
+- [x] Constitution principles that applied were checked, and none was violated
+- [x] Documentation that users or operators rely on is updated
 
 ## Gate 3: archived
 
