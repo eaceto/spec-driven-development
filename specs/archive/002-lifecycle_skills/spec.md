@@ -1,7 +1,7 @@
 ---
 id: "002"
 title: Lifecycle skills
-status: done
+status: archived
 tier: standard
 owner: maintainers
 capabilities: [skills]
