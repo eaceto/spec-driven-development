@@ -21,4 +21,4 @@
 - [ ] T11 Run every skill on Devin CLI against a scratch project and record evidence in checklist.md [REQ-002-06 through REQ-002-18]
 - [ ] T12 Run every skill on Claude Code against a scratch project and record evidence in checklist.md [REQ-002-06 through REQ-002-18]
 - [ ] T13 Dry-run `sdd-archive` against a copy of change 001 and compare the produced capabilities to its requirements [REQ-002-16]
-- [ ] T14 Check line limits, section order and vendor-neutrality of every skill body [REQ-002-01, REQ-002-02, REQ-002-03]
+- [x] T14 Check line limits, section order and vendor-neutrality of every skill body [REQ-002-01, REQ-002-02, REQ-002-03]
