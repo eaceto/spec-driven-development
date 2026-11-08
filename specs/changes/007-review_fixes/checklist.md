@@ -11,12 +11,13 @@
 
 ## Gate 2: done
 
-- [ ] Every success criterion in spec.md is met
-- [ ] Every task in tasks.md is ticked
-- [ ] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
-- [ ] No open questions remain in design.md
-- [ ] Constitution principles that applied were checked, and none was violated
-- [ ] Documentation that users or operators rely on is updated
+- [x] Every success criterion in spec.md is met
+  - Evidence, 2026-11-08: examples/notes-python validates clean and is linked from tutorial step 6; no skill carries metadata.version and the validator, hook and 50 tests pass; a test proves an id only in a comment is not coverage; a block list yields a violation naming `[a, b]`; ticket numbering passes under `numbering: ticket` and fails under sequential in the suite; five refusal paths observed in fresh runs, one with a caveat on skill version.
+- [x] Every task in tasks.md is ticked
+- [x] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
+- [x] No open questions remain in design.md
+- [x] Constitution principles that applied were checked, and none was violated
+- [x] Documentation that users or operators rely on is updated
 
 ## Gate 3: archived
 

@@ -6,7 +6,7 @@ Maintained by the skills. `sdd-new`, `sdd-plan`, `sdd-verify` and `sdd-archive` 
 
 | # | Title | Status | Tier | Owner | Ticket | Capabilities | Updated |
 |---|---|---|---|---|---|---|---|
-| 007 | [Fixes from the 0.2.0 review](changes/007-review_fixes/spec.md) | in-progress | standard | maintainers | | website, skills, validator, spec-layout | 2026-11-08 |
+| 007 | [Fixes from the 0.2.0 review](changes/007-review_fixes/spec.md) | done | standard | maintainers | | website, skills, validator, spec-layout | 2026-11-08 |
 
 ## Capabilities
 

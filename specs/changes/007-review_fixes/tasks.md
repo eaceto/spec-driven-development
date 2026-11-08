@@ -11,4 +11,4 @@
 
 ## Verification
 
-- [ ] T07 Validator, tests, strict build and the example green; every REQ-007 id and modified id named in tests [all]
+- [x] T07 Validator, tests, strict build and the example green; every REQ-007 id and modified id named in tests [all]
