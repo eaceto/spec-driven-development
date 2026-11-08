@@ -2,7 +2,7 @@
 
 This page is the reference. For a guided first change, start at [the tutorial](tutorial/index.md); for the reasoning, read [what it is, and why](what-and-why.md).
 
-One sentence: **every change starts with why, is written before code, and ends by updating the truth.**
+On this page: [Two folders](#two-folders) · [Five files](#five-files) · [Five states, three gates](#five-states-three-gates) · [Requirements and IDs](#requirements-and-ids) · [Numbering and claiming](#numbering-and-claiming) · [Ownership and approval](#ownership-and-approval) · [Commits and pull requests](#commits-and-pull-requests) · [Tickets and documents](#tickets-and-documents) · [The constitution](#the-constitution) · [Many repositories](#many-repositories) · [Scale](#scale) · [Adopting in an existing project](#adopting-in-an-existing-project) · [Agents](#agents) · [Where the method came from](#where-the-method-came-from)\n\nOne sentence: **every change starts with why, is written before code, and ends by updating the truth.**
 
 Everything below is the reference behind that sentence. Each section is short on purpose. If a rule here cannot be stated in one sentence, it is a bug in the method.
 

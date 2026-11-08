@@ -12,6 +12,9 @@ exclude_docs: |
 theme:
   name: material
   language: en
+  favicon: assets/favicon.svg
+  icon:
+    logo: material/file-document-check-outline
   features:
     - navigation.sections
     - navigation.top
