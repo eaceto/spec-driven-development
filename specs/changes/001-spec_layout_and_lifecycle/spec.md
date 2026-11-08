@@ -1,7 +1,7 @@
 ---
 id: "001"
 title: Spec layout and lifecycle
-status: in-progress
+status: done
 tier: standard
 owner: maintainers
 capabilities: [spec-layout, lifecycle]
