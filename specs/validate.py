@@ -751,6 +751,83 @@ def check_status_forward(project: Project, ch: Change) -> Iterator[Violation]:
         yield Violation(f"{ch.rel}/spec.md", "status-forward", ["REQ-001-16"], f"status moved backwards from {previous} to {ch.status}")
 
 
+# --- Index ---
+
+@dataclass
+class Index:
+    sections: List[str]
+    active: Dict[str, List[str]]
+    capabilities: Dict[str, List[str]]
+    archived: Optional[int]
+
+
+def _cells(line: str) -> List[str]:
+    return [LINK_RE.sub(r"\1", c).strip() for c in line.strip().strip("|").split("|")]
+
+
+def parse_index(text: str) -> Index:
+    lines = text.splitlines()
+    sections = _h2_sections(lines)
+    idx = Index([s[0] for s in sections], {}, {}, None)
+    for name, lo, hi in sections:
+        chunk = "\n".join(lines[lo:hi])
+        rows = [_cells(l) for l in lines[lo:hi] if l.lstrip().startswith("|")]
+        rows = [r for r in rows if not all(set(c) <= set("-: ") for c in r)]  # drop the separator row
+        body = rows[1:]  # drop the header row
+        if name == "Active changes":
+            idx.active = {r[0]: r for r in body if r and r[0]}
+        elif name == "Capabilities":
+            idx.capabilities = {r[0]: r for r in body if r and r[0]}
+        elif name == "Archived changes":
+            m = re.search(r"(\d+) archived", chunk)
+            idx.archived = int(m.group(1)) if m else (0 if re.search(r"\bNone\b", chunk) else None)
+    return idx
+
+
+@rule("index", ["REQ-001-14"], "INDEX.md matches the file system: active rows, capability rows, archived count")
+def check_index(project: Project) -> Iterator[Violation]:
+    path = "specs/INDEX.md"
+    if project.index_text is None:
+        yield Violation(path, "index", ["REQ-001-14"], "missing")
+        return
+    idx = parse_index(project.index_text)
+    for name in INDEX_SECTIONS:
+        if name not in idx.sections:
+            yield Violation(path, "index", ["REQ-001-14"], f"missing section '{name}'")
+    active = {ch.num: ch for ch in project.changes if ch.location == "changes" and ch.num}
+    for num in sorted(set(active) - set(idx.active)):
+        yield Violation(path, "index", ["REQ-001-14"], f"change {num} has no row under Active changes")
+    for num in sorted(set(idx.active) - set(active)):
+        yield Violation(path, "index", ["REQ-001-14"], f"row for change {num} but no such directory under specs/changes/")
+    for num, cells in sorted(idx.active.items()):
+        ch = active.get(num)
+        if ch is None:
+            continue
+        if len(cells) < 8:
+            yield Violation(path, "index", ["REQ-001-14"], f"row for change {num} has {len(cells)} cells, expected 8")
+            continue
+        expected = {"status": ch.status, "tier": ch.tier, "owner": str(ch.fm.get("owner", "")), "updated": str(ch.fm.get("updated", ""))}
+        actual = {"status": cells[2], "tier": cells[3], "owner": cells[4], "updated": cells[7]}
+        for key, want in expected.items():
+            if actual[key] != want:
+                yield Violation(path, "index", ["REQ-001-14"], f"change {num}: {key} is {actual[key]!r} in the index but {want!r} in spec.md")
+        row_caps = {c.strip() for c in cells[6].split(",") if c.strip()}
+        if row_caps != set(ch.capabilities):
+            yield Violation(path, "index", ["REQ-001-14"], f"change {num}: capabilities are {sorted(row_caps)} in the index but {sorted(ch.capabilities)} in spec.md")
+    caps = {c.dirname: c for c in project.capabilities}
+    for cid in sorted(set(caps) - set(idx.capabilities)):
+        yield Violation(path, "index", ["REQ-001-14"], f"capability {cid} has no row under Capabilities")
+    for cid in sorted(set(idx.capabilities) - set(caps)):
+        yield Violation(path, "index", ["REQ-001-14"], f"row for capability {cid} but no such directory under specs/capabilities/")
+    for cid, cells in sorted(idx.capabilities.items()):
+        cap = caps.get(cid)
+        if cap and len(cells) >= 4 and cells[3] != str(len(cap.requirements)):
+            yield Violation(path, "index", ["REQ-001-14"], f"capability {cid}: {cells[3]} requirements in the index but {len(cap.requirements)} in its spec")
+    archived = sum(1 for ch in project.changes if ch.location == "archive")
+    if idx.archived != archived:
+        yield Violation(path, "index", ["REQ-001-14"], f"archived count is {idx.archived} in the index but {archived} directories are under specs/archive/")
+
+
 # ---------------------------------------------------------------------------
 # Running
 

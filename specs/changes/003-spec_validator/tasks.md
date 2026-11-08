@@ -11,7 +11,7 @@
 - [x] T04 Requirement grammar and grouping rules [REQ-003-10, REQ-003-11]
 - [x] T05 Capability spec rules [REQ-003-12]
 - [x] T06 Status consistency rules, including coverage search and backward moves against git [REQ-003-13]
-- [ ] T07 Index rule [REQ-003-14]
+- [x] T07 Index rule [REQ-003-14]
 - [ ] T08 Constitution and entry file rules [REQ-003-15]
 - [ ] T09 Commit trailer rule [REQ-003-16]
 - [ ] T10 Skills rules [REQ-003-17]
