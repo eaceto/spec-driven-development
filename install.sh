@@ -7,8 +7,10 @@
 # What it does:
 #   1. Copies skills/sdd-*/ into <project>/.agents/skills/ and <project>/.claude/skills/.
 #   2. Bundles specs/templates/ into the installed sdd-init so it can create specs/ in a project that has none.
-#   3. Writes the version from VERSION into sdd_version in <project>/specs/constitution.md, if that file exists.
-#   4. Creates <project>/CLAUDE.md pointing to AGENTS.md if the project has no CLAUDE.md.
+#   3. Copies specs/validate.py into <project>/specs/ (not in link mode against this repository).
+#   4. Writes the version from VERSION into sdd_version and sets validator: python3 specs/validate.py
+#      in <project>/specs/constitution.md, if that file exists.
+#   5. Creates <project>/CLAUDE.md pointing to AGENTS.md if the project has no CLAUDE.md.
 set -eu
 
 usage() { echo "usage: $0 <project-dir> [--link]" >&2; exit 2; }
@@ -57,18 +59,30 @@ for dest in $DESTS; do
   done
 done
 
+VALIDATOR_CMD="python3 specs/validate.py"
+if [ -d "$TARGET/specs" ] && [ "$TARGET" != "$HERE" ]; then
+  cp "$HERE/specs/validate.py" "$TARGET/specs/validate.py"
+  echo "validator: copied to specs/validate.py"
+fi
+
+# set_key <file> <key> <value>: replace the key in the frontmatter, or add it before the closing ---
+set_key() {
+  tmp=$(mktemp)
+  if grep -q "^$2:" "$1"; then
+    sed "s|^$2:.*|$2: $3|" "$1" > "$tmp"
+  else
+    awk -v kv="$2: $3" 'NR>1 && $0=="---" && !done {print kv; done=1} {print}' "$1" > "$tmp"
+  fi
+  mv "$tmp" "$1"
+}
+
 CONST="$TARGET/specs/constitution.md"
 if [ -f "$CONST" ]; then
-  tmp=$(mktemp)
-  if grep -q '^sdd_version:' "$CONST"; then
-    sed "s/^sdd_version:.*/sdd_version: $VERSION/" "$CONST" > "$tmp"
-  else
-    awk -v v="$VERSION" 'NR==1 && $0=="---" {print; print "sdd_version: " v; next} {print}' "$CONST" > "$tmp"
-  fi
-  mv "$tmp" "$CONST"
-  echo "constitution: sdd_version set to $VERSION"
+  set_key "$CONST" sdd_version "$VERSION"
+  set_key "$CONST" validator "$VALIDATOR_CMD"
+  echo "constitution: sdd_version set to $VERSION, validator set to '$VALIDATOR_CMD'"
 else
-  echo "constitution: none yet; sdd-init will write it with sdd_version $VERSION"
+  echo "constitution: none yet; sdd-init will write it with sdd_version $VERSION, then rerun install.sh to set the validator key"
 fi
 
 if [ ! -f "$TARGET/CLAUDE.md" ]; then

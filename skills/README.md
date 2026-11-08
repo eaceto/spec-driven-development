@@ -20,7 +20,7 @@ Gate 1, from draft to approved, is the only transition a person performs by hand
 - Limit: 150 lines including frontmatter. A skill that needs more is doing two jobs.
 - Vendor-neutral bodies: no tool-specific path, command or product name. Those belong in `install.sh` and `docs/method.md`.
 - Templates: a skill reads `specs/templates/` from the project it runs in. `sdd-init` is the exception. The install step bundles the templates into its copy, so it can create that folder in a project that has none.
-- Validator: when the constitution frontmatter has a `validator` key, a skill runs that command before reporting. Otherwise it performs the structural checks it depends on by reading the files, and says that no validator was found.
+- Validator: when the constitution frontmatter has a `validator` key, a skill runs that command before reporting. Otherwise it performs the structural checks it depends on by reading the files, and says that no validator was found. `install.sh` installs `specs/validate.py` and sets the key.
 
 ## Install
 

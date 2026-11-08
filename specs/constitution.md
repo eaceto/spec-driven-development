@@ -4,6 +4,7 @@ version: 1.0.0
 owner: maintainers
 numbering: sequential
 sdd_version: 0.1.0
+validator: python3 specs/validate.py
 ---
 
 # Constitution

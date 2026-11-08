@@ -168,6 +168,18 @@ Do not specify the whole codebase. Maintainers of every existing tool say the sa
 
 Skills live in `skills/<name>/SKILL.md` in the open Agent Skills format. Installing them into a project links that folder into `.agents/skills/`, read by Devin and Codex among others, and `.claude/skills/`, read by Claude Code. The repository root carries `AGENTS.md` with the loading rule and lifecycle rules. `CLAUDE.md` points to it.
 
+### The validator
+
+`specs/validate.py` checks the mechanical rules of the method and names the requirement behind each one. It is one Python 3 file with no dependencies, installed by `install.sh`, which also sets `validator: python3 specs/validate.py` in the constitution so the skills run it before reporting.
+
+```
+python3 specs/validate.py            whole tree
+python3 specs/validate.py 014        one change
+python3 specs/validate.py --rules    what it checks, and why
+```
+
+Exit codes: 0 clean, 1 violations, 2 usage error. Each violation is one line: path, rule id, the requirement ids it enforces, and what to fix. The checks cover layout, naming and numbering, tier files, the order of `spec.md`, frontmatter, requirement grammar and grouping, capability specs, status consistency including test coverage and archive merges, the index, the constitution, the agent entry file, commit trailers when git is available, and the skills when a project ships them. It does not judge whether a purpose is well written or a design is sound. Those remain with people and skills.
+
 The six skills map to the lifecycle: `sdd-init`, `sdd-new`, `sdd-plan`, `sdd-implement`, `sdd-verify`, `sdd-archive`. Each is a procedure a person can follow by hand, with the same five sections: when to use, preconditions, steps, refuse when, done when. Skills read templates from the project's `specs/templates/`, and `sdd-init` carries a bundled copy so it can create that folder.
 
 ### Installing the skills
