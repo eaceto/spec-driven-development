@@ -828,6 +828,40 @@ def check_index(project: Project) -> Iterator[Violation]:
         yield Violation(path, "index", ["REQ-001-14"], f"archived count is {idx.archived} in the index but {archived} directories are under specs/archive/")
 
 
+# --- Constitution and agent entry file ---
+
+@rule("constitution", ["REQ-001-13"], "constitution has its frontmatter keys and four sections and fits on one page")
+def check_constitution(project: Project) -> Iterator[Violation]:
+    path = "specs/constitution.md"
+    if project.constitution_fm is None and project.constitution_error is None:
+        yield Violation(path, "constitution", ["REQ-001-13"], "missing")
+        return
+    if project.constitution_error:
+        yield Violation(path, "constitution", ["REQ-001-13"], project.constitution_error)
+        return
+    fm = project.constitution_fm or {}
+    for key in CONSTITUTION_FM_KEYS:
+        if key not in fm:
+            yield Violation(path, "constitution", ["REQ-001-13"], f"missing field {key}")
+    if project.constitution_sections != CONSTITUTION_SECTIONS:
+        yield Violation(path, "constitution", ["REQ-001-13"], f"sections are {project.constitution_sections}; expected {CONSTITUTION_SECTIONS}")
+    if project.constitution_lines > CONSTITUTION_MAX_LINES:
+        yield Violation(path, "constitution", ["REQ-001-13"],
+                        f"{project.constitution_lines} lines; a constitution fits on one page, at most {CONSTITUTION_MAX_LINES}")
+
+
+@rule("agents-file", ["REQ-001-22"], "AGENTS.md at the root states the loading rule")
+def check_agents_file(project: Project) -> Iterator[Violation]:
+    path = project.root / "AGENTS.md"
+    text = _read(project, path) if path.is_file() else None
+    if text is None:
+        yield Violation("AGENTS.md", "agents-file", ["REQ-001-22"], "missing; agents need the loading rule")
+        return
+    for needle in ("specs/constitution.md", "specs/INDEX.md"):
+        if needle not in text:
+            yield Violation("AGENTS.md", "agents-file", ["REQ-001-22"], f"does not mention {needle}")
+
+
 # ---------------------------------------------------------------------------
 # Running
 
