@@ -2,7 +2,7 @@
 name: sdd-verify
 description: Verify an in-progress change against Gate 2 in a project that uses spec-driven development. Evaluates every Gate 2 checklist item with evidence, lists requirement IDs that no test references, and moves the change to done only when everything passes. Use when asked to verify, check completeness of, or close a change.
 metadata:
-  sdd_version: 0.3.0
+  sdd_version: 0.3.1
 ---
 
 # sdd-verify

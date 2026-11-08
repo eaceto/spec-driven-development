@@ -2,7 +2,7 @@
 name: sdd-archive
 description: Archive a done change in a project that uses spec-driven development. Merges its requirements into the living capability specs, creating capabilities that do not exist yet, moves the change directory to the archive, sets the status to archived and regenerates the index. Refuses unless the change is done and its capabilities are consistent. Use when asked to archive, close out or merge a finished change.
 metadata:
-  sdd_version: 0.3.0
+  sdd_version: 0.3.1
 ---
 
 # sdd-archive
