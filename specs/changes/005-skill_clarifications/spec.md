@@ -1,7 +1,7 @@
 ---
 id: "005"
 title: Skill clarifications from the first tutorial run
-status: approved
+status: in-progress
 tier: quick
 owner: maintainers
 capabilities: [skills]
