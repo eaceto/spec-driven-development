@@ -11,7 +11,7 @@ Maintained by the skills. `sdd-new`, `sdd-plan`, `sdd-verify` and `sdd-archive` 
 
 | Id | Title | Owner | Requirements | Updated |
 |---|---|---|---|---|
-| ci | [Ci](capabilities/ci/spec.md) | maintainers | 1 | 2026-11-08 |
+| ci | [CI](capabilities/ci/spec.md) | maintainers | 1 | 2026-11-08 |
 | lifecycle | [Lifecycle](capabilities/lifecycle/spec.md) | maintainers | 8 | 2026-11-08 |
 | skills | [Skills](capabilities/skills/spec.md) | maintainers | 19 | 2026-11-08 |
 | spec-layout | [Spec layout](capabilities/spec-layout/spec.md) | maintainers | 15 | 2026-11-08 |

@@ -1,11 +1,11 @@
 ---
 id: ci
-title: Ci
+title: CI
 owner: maintainers
 updated: 2026-11-08
 ---
 
-# Ci
+# CI
 
 ## Purpose
 
