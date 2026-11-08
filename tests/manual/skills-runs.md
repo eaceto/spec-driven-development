@@ -28,3 +28,4 @@ Open observations from the runs, each a candidate improvement rather than a fail
 - The trial's first commit held spec and plan together. The claim rule asks for spec.md alone to be merged first; the skills say so, but an agent that commits only at the end hides it. A later change could make `sdd-new` commit the claim itself.
 - The trial's index linked the capability id rather than the title; fixed in the skills on 2026-11-08.
 - `sdd-archive` describes the merge for changes with a `requirements.md`. A quick change has none; its listed capabilities should still receive a History line. Done by hand for change 005 on 2026-11-08; a later quick change should say so in the skill.
+- Tutorial transcripts for Devin CLI: not captured, no Devin session was available on 2026-11-08. The Devin tabs say so. REQ-004-04 was amended to require Claude Code transcripts and a pending note for Devin. Open until someone runs the six steps on Devin and sends the transcripts.

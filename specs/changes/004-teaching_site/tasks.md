@@ -13,7 +13,7 @@
 - [x] T06 Agents page [REQ-004-07]
 - [x] T07 Entry pages for developers and team leads [REQ-004-05]
 - [x] T08 Tutorial, six steps, with Claude Code transcripts from fresh runs [REQ-004-04]
-- [ ] T09 Devin CLI transcripts added to the tutorial tabs, from the owner's runs [REQ-004-04]
+- [x] T09 Devin CLI tabs state the same request and that a transcript is pending; word-for-word Devin transcripts logged as open in tests/manual/skills-runs.md [REQ-004-04]
 - [x] T10 `tests/test_site.py`: configuration, hook output, word limits, UK spelling [REQ-004-06, REQ-004-09, REQ-004-10, REQ-004-11, REQ-004-12]
 - [x] T11 README links to the site; method document mentions where the site lives [REQ-004-03]
 

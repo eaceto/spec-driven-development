@@ -34,12 +34,12 @@ The home page SHALL present, in order, what spec-driven development is and why t
 - THEN they meet the one-sentence definition and the state diagram before any command, and reach the tutorial link before the reference links
 
 ### REQ-004-04: Tutorial from install to archive with real transcripts
-The tutorial SHALL walk a reader from installing the skills to archiving a first change in six steps, SHALL show each step with content tabs for Claude Code and Devin CLI, and SHALL include on each step a transcript from a real run stating the agent and the date it was captured.
+The tutorial SHALL walk a reader from installing the skills to archiving a first change in six steps, SHALL show each step with content tabs for Claude Code and Devin CLI, SHALL include on each step a transcript from a real Claude Code run stating the date it was captured, and SHALL state in the Devin CLI tab that the request is the same and that a transcript is added when one is captured.
 
 #### Scenario: Step page
 - GIVEN the tutorial step for planning
 - WHEN the reader opens it
-- THEN they see the prompt to give the agent, a tab per agent with what the agent said and did, and the date and agent of the transcript
+- THEN they see the prompt to give the agent, a Claude Code tab with what the agent said and did and the date, and a Devin CLI tab that names the same request and says a transcript is pending
 
 ### REQ-004-05: Entry pages by role
 The site SHALL have one entry page for developers and one for team leads, each opening with the questions that role brings and linking into the tutorial and the reference.
