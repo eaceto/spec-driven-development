@@ -11,8 +11,8 @@
 - [x] T04 Write `skills/sdd-plan/SKILL.md` including quick-tier handling [REQ-002-11, REQ-002-12, REQ-002-18]
 - [x] T05 Write `skills/sdd-implement/SKILL.md` [REQ-002-13, REQ-002-14]
 - [x] T06 Write `skills/sdd-verify/SKILL.md` [REQ-002-15, REQ-002-18]
-- [ ] T07 Write `skills/sdd-archive/SKILL.md` [REQ-002-16, REQ-002-17, REQ-002-18]
-- [ ] T08 Add status preconditions, the loading rule and the validator hook to every skill [REQ-002-05, REQ-002-06, REQ-002-19]
+- [x] T07 Write `skills/sdd-archive/SKILL.md` [REQ-002-16, REQ-002-17, REQ-002-18]
+- [x] T08 Add status preconditions, the loading rule and the validator hook to every skill [REQ-002-05, REQ-002-06, REQ-002-19]
 - [ ] T09 Write `install.sh` and the install section in `docs/method.md` [REQ-002-04]
 - [ ] T10 Install the skills into this repository and update `AGENTS.md` to name them [REQ-002-04]
 
