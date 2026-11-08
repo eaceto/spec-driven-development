@@ -31,4 +31,4 @@ sdd_version: 0.1.0       # version of the SDD templates and skills this project 
 
 | Version | Date | Change | Summary |
 |---|---|---|---|
-| 1.0.0 | YYYY-MM-DD | NNN | Initial constitution |
+| 1.0.0 | YYYY-MM-DD | none | Initial constitution |
