@@ -28,7 +28,7 @@ The project has no `specs/` directory and wants to adopt spec-driven development
    - Frontmatter: `extends: none` unless told otherwise, `version: 1.0.0`, `owner`, `numbering`, and `sdd_version` from this skill's metadata.
    - Keep it to one page. With more than ten candidate principles, keep the ten that matter most.
 4. Existing project only: write the capability map. Identify capabilities from the top-level modules, services or domains named in what you read. For each, create `specs/capabilities/<id>/spec.md` from `specs/templates/capability.md` with `id`, `title`, `owner` if known, a one-paragraph Purpose, and empty Requirements, Retired and History sections. Write no requirements. Stop at the obvious ones; fifteen is already too many.
-5. Fill the Capabilities table in `specs/INDEX.md` from the map, with requirement count 0.
+5. Fill the Capabilities table in `specs/INDEX.md` from the map: id, title linked to the capability spec, owner, requirement count 0, today.
 6. Write `AGENTS.md` at the project root from `specs/templates/AGENTS.md`. If one already exists, append the two sections instead of replacing it.
 7. If the constitution frontmatter has a `validator` key, run that command and include its output in your report. Otherwise check by reading: the six entries exist, the constitution has its five frontmatter keys and four sections, the index has its three tables.
 8. Report what you created and name the next step: `sdd-new` to start the first change.

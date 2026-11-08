@@ -29,7 +29,7 @@ A change has passed Gate 2 and its requirements must become part of how the syst
    - Set `updated` in the frontmatter to today.
 3. Move the change directory from `specs/changes/` to `specs/archive/`, keeping its name. Use the version control system's move so history follows.
 4. In the archived `spec.md`, set `status: archived` and `updated`. Tick the Gate 3 items in its `checklist.md`.
-5. Regenerate `specs/INDEX.md` from the file system, not from the previous index. Active changes: every directory in `specs/changes/`, reading each `spec.md` frontmatter. Capabilities: every `specs/capabilities/*/spec.md`, counting `### REQ-` headings. Archived changes: a count and a link to `specs/archive/`.
+5. Regenerate `specs/INDEX.md` from the file system, not from the previous index. Active changes: every directory in `specs/changes/`, reading each `spec.md` frontmatter. Capabilities: every `specs/capabilities/*/spec.md` as id, title linked to the spec, owner, the count of `### REQ-` headings, updated. Archived changes: a count and a link to `specs/archive/`.
 6. If the constitution frontmatter has a `validator` key, run that command and include its output. Otherwise check by reading: every requirement ID from the change appears in exactly one capability spec, the archive directory exists, `specs/changes/` no longer has it, the index matches the file system.
 7. Commit with `Change: NNN`. Report which requirements went to which capabilities, which capabilities were created, and which Purposes need an owner's attention.
 
