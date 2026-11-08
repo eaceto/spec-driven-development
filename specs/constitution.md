@@ -3,7 +3,7 @@ extends: none
 version: 1.0.0
 owner: maintainers
 numbering: sequential
-sdd_version: 0.1.0
+sdd_version: 0.2.0
 validator: python3 specs/validate.py
 ---
 

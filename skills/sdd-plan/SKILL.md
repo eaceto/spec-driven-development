@@ -3,7 +3,7 @@ name: sdd-plan
 description: Plan an approved change in a project that uses spec-driven development. Writes requirements grouped by capability with stable IDs, a design with recorded decisions, tasks citing requirement IDs and the checklist, then moves the change to in-progress. Refuses on a draft. Use when asked to plan, write requirements for, design or break down an approved change.
 metadata:
   version: 0.1.1
-  sdd_version: 0.1.0
+  sdd_version: 0.2.0
 ---
 
 # sdd-plan

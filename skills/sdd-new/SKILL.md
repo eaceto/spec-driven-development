@@ -3,7 +3,7 @@ name: sdd-new
 description: Start a new change in a project that uses spec-driven development. Turns a description of a problem or feature into a numbered change directory containing only spec.md, written purpose first after at most five clarifying questions, and adds the change to the index as a draft. Use when asked to create, start or propose a spec, change or feature.
 metadata:
   version: 0.1.1
-  sdd_version: 0.1.0
+  sdd_version: 0.2.0
 ---
 
 # sdd-new
