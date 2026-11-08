@@ -6,7 +6,6 @@ Maintained by the skills. `sdd-new`, `sdd-plan`, `sdd-verify` and `sdd-archive` 
 
 | # | Title | Status | Tier | Owner | Ticket | Capabilities | Updated |
 |---|---|---|---|---|---|---|---|
-| 009 | [Site improvements from the first review](changes/009-site_improvements/spec.md) | done | standard | maintainers | | website | 2026-11-08 |
 
 ## Capabilities
 
@@ -17,8 +16,8 @@ Maintained by the skills. `sdd-new`, `sdd-plan`, `sdd-verify` and `sdd-archive` 
 | skills | [Skills](capabilities/skills/spec.md) | maintainers | 20 | 2026-11-08 |
 | spec-layout | [Spec layout](capabilities/spec-layout/spec.md) | maintainers | 15 | 2026-11-08 |
 | validator | [Validator](capabilities/validator/spec.md) | maintainers | 23 | 2026-11-08 |
-| website | [Website](capabilities/website/spec.md) | maintainers | 13 | 2026-11-08 |
+| website | [Website](capabilities/website/spec.md) | maintainers | 22 | 2026-11-08 |
 
 ## Archived changes
 
-8 archived. See `specs/archive/`.
+9 archived. See `specs/archive/`.

@@ -1,7 +1,7 @@
 ---
 id: "009"
 title: Site improvements from the first review
-status: done
+status: archived
 tier: standard
 owner: maintainers
 capabilities: [website]

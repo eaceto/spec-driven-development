@@ -21,9 +21,9 @@
 
 ## Gate 3: archived
 
-- [ ] Added requirements are present in their capability specs with Origin set
-- [ ] Modified requirements are replaced in place with "Changed in" updated
-- [ ] Removed requirements are listed under Retired in their capability specs
-- [ ] Each touched capability has a History line for this change
-- [ ] The change directory has moved to specs/archive/
-- [ ] INDEX.md is regenerated
+- [x] Added requirements are present in their capability specs with Origin set
+- [x] Modified requirements are replaced in place with "Changed in" updated
+- [x] Removed requirements are listed under Retired in their capability specs
+- [x] Each touched capability has a History line for this change
+- [x] The change directory has moved to specs/archive/
+- [x] INDEX.md is regenerated
