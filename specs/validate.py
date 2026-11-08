@@ -637,6 +637,48 @@ def check_requirement_id_new(project: Project, ch: Change) -> Iterator[Violation
             yield Violation(path, "requirement-id-new", ["REQ-001-10"], f"{r.id} is retired in capability {retired[r.id].dirname}; ids are never reused")
 
 
+# --- Capability specs ---
+
+@rule("capability-structure", ["REQ-001-11", "REQ-001-08"],
+      "capability spec at capabilities/<id>/spec.md: frontmatter, four sections in order, requirement blocks with Origin", "capability")
+def check_capability_structure(project: Project, cap: Capability) -> Iterator[Violation]:
+    path = f"{cap.rel}/spec.md"
+    if not cap.has_spec:
+        yield Violation(cap.rel, "capability-structure", ["REQ-001-11"], "no spec.md")
+        return
+    if cap.fm_error:
+        yield Violation(path, "capability-structure", ["REQ-001-11"], cap.fm_error)
+        return
+    if str(cap.fm.get("id", "")) != cap.dirname:
+        yield Violation(path, "capability-structure", ["REQ-001-11"], f"id is {cap.fm.get('id')!r} but the directory says {cap.dirname}")
+    for key in ("title", "owner", "updated"):
+        if key not in cap.fm:
+            yield Violation(path, "capability-structure", ["REQ-001-11"], f"missing field {key}")
+    if cap.sections != CAPABILITY_SECTIONS:
+        yield Violation(path, "capability-structure", ["REQ-001-11"], f"sections are {cap.sections}; expected {CAPABILITY_SECTIONS}")
+    for r in cap.requirements:
+        if not r.origin:
+            yield Violation(path, "capability-structure", ["REQ-001-11"], f"{r.id}: no Origin line")
+        if len([s for s in r.statements if "SHALL" in s]) != 1:
+            yield Violation(path, "capability-structure", ["REQ-001-08"], f"{r.id}: expected one SHALL statement")
+        if not r.scenarios:
+            yield Violation(path, "capability-structure", ["REQ-001-08"], f"{r.id}: no scenario")
+
+
+@rule("requirement-id-unique", ["REQ-001-10"], "a requirement id lives in one capability and is never both active and retired")
+def check_requirement_id_unique(project: Project) -> Iterator[Violation]:
+    where: Dict[str, str] = {}
+    for cap in project.capabilities:
+        for r in cap.requirements:
+            if r.id in where:
+                yield Violation(f"{cap.rel}/spec.md", "requirement-id-unique", ["REQ-001-10"], f"{r.id} is also active in {where[r.id]}")
+            else:
+                where[r.id] = cap.dirname
+    for rid, cap in project.retired_ids().items():
+        if rid in where:
+            yield Violation(f"{cap.rel}/spec.md", "requirement-id-unique", ["REQ-001-10"], f"{rid} is retired here but active in {where[rid]}")
+
+
 # ---------------------------------------------------------------------------
 # Running
 

@@ -9,7 +9,7 @@
 - [x] T02 Layout, naming, numbering and tier rules, implementing the amended REQ-001-01 [REQ-003-05, REQ-003-06, REQ-003-07, REQ-001-01]
 - [x] T03 Spec order and frontmatter rules [REQ-003-08, REQ-003-09]
 - [x] T04 Requirement grammar and grouping rules [REQ-003-10, REQ-003-11]
-- [ ] T05 Capability spec rules [REQ-003-12]
+- [x] T05 Capability spec rules [REQ-003-12]
 - [ ] T06 Status consistency rules, including coverage search and backward moves against git [REQ-003-13]
 - [ ] T07 Index rule [REQ-003-14]
 - [ ] T08 Constitution and entry file rules [REQ-003-15]
