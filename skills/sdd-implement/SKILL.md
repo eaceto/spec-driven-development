@@ -21,7 +21,7 @@ A change is planned and has unticked tasks.
 
 1. Check the status. Draft: stop, Gate 1. Approved without the tier's files: stop, `sdd-plan`. Done or archived: stop, the change is closed.
 2. Take the first unticked task in `tasks.md`. Read the requirement IDs it cites and their scenarios in `requirements.md`, and the parts of `design.md` that bear on it.
-3. Before writing anything, check the task against the requirements, the guardrails and the constitution. If doing it correctly needs behaviour no requirement describes, or contradicts one, stop. Write no code. Report the task, the requirement IDs involved and the gap. Leave `requirements.md` unchanged; a requirement changes only through a reviewed edit.
+3. Before writing anything, check the task against the requirements, the guardrails and the constitution. A behaviour recorded as a decision in `design.md` counts as described. If doing it correctly needs behaviour found in neither the requirements nor the design, or contradicts a requirement, stop. Write no code. Report the task, the requirement IDs involved and the gap. Leave `requirements.md` unchanged; a requirement changes only through a reviewed edit.
 4. Implement the task. Write or extend tests so that every cited requirement ID appears in a test name or in a comment beside the test that checks its scenario. Run the tests.
 5. Commit. Subject line in the project's usual style. End the message with `Change: NNN` and, on the next line, `Requirements:` followed by the IDs this commit covers, comma separated. A setup task carries `Change:` only.
 6. Tick the task in `tasks.md` and set `updated` in `spec.md` to today. Commit that too, with `Change: NNN`.

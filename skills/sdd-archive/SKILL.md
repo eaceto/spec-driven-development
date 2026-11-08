@@ -20,7 +20,7 @@ A change has passed Gate 2 and its requirements must become part of how the syst
 ## Steps
 
 1. Check consistency before writing anything. Status is `done`. Every `## Capability:` heading in `requirements.md` names a capability in the frontmatter. Every ID under Modified requirements and Removed requirements exists in its capability spec. If any check fails, stop and report exactly what is inconsistent.
-2. For each `## Capability: <id>` section of `requirements.md`:
+2. A quick change has no `requirements.md`: merge nothing, give each capability in its frontmatter a History line, and go to step 3. Otherwise, for each `## Capability: <id>` section of `requirements.md`:
    - If `specs/capabilities/<id>/spec.md` does not exist, create it from the template with `id`, a title from the id, `owner` from the change, and a Purpose of one or two sentences taken from the change's Why and What. Note in the report that the owner should refine the Purpose.
    - Append each added requirement to the Requirements section, keeping its heading, SHALL statement, `Ref:` line and scenarios, with the line `Origin: NNN` under the heading.
    - For each modified requirement, replace the block with the same ID in place with the new text, keep `Origin`, and add or extend `Changed in:` with NNN.
