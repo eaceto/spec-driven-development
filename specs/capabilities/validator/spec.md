@@ -175,16 +175,18 @@ The validator SHALL report a violation when a capability spec is not at `specs/c
 
 ### REQ-003-13: Status consistency rule
 Origin: 003
+Changed in: 007
 
-The validator SHALL report a violation when a draft change contains any file other than `spec.md`; when a done change has an unticked task, an unticked Gate 2 item, or a requirement id that appears in no test file and is not listed under Not testable; when an archived change is under `specs/changes/`, a change under `specs/archive/` is not archived, or an archived change has an added requirement absent from its capability spec, a modified one without `Changed in`, a removed one not under Retired, or an unticked Gate 3 item; and, when the project is a git repository, when a status has moved backwards relative to the committed version.
+
+The validator SHALL report a violation when a draft change contains any file other than `spec.md`; when a done change has an unticked task, an unticked Gate 2 item, or a requirement id that appears in no test file outside comment lines and is not listed under Not testable; when an archived change is under `specs/changes/`, a change under `specs/archive/` is not archived, or an archived change has an added requirement absent from its capability spec, a modified one without `Changed in`, a removed one not under Retired, or an unticked Gate 3 item; and, when the project is a git repository, when a status has moved backwards relative to the committed version.
 
 #### Scenario: Draft with design
 - GIVEN a draft change containing `design.md`
 - WHEN the validator runs
 - THEN a violation cites REQ-001-19
 
-#### Scenario: Done but uncovered
-- GIVEN a done change whose REQ-014-03 is in no test file and not under Not testable
+#### Scenario: Id only in a comment
+- GIVEN a done change whose REQ-014-03 appears in a test file only on a line that is a comment
 - WHEN the validator runs
 - THEN a violation names REQ-014-03 and cites REQ-001-20
 
@@ -235,8 +237,10 @@ When the project is a git repository, the validator SHALL report a violation for
 
 ### REQ-003-17: Skills rules
 Origin: 003
+Changed in: 007
 
-When the project root contains `skills/`, the validator SHALL report a violation for a `skills/<name>/SKILL.md` that exceeds 150 lines, whose `name` differs from its directory, that lacks `description`, `metadata.version` or `metadata.sdd_version`, whose level-two sections are not When to use, Preconditions, Steps, Refuse when, Done when in order, or whose body contains `.claude`, `.devin`, `.agents` or an agent product name.
+
+When the project root contains `skills/`, the validator SHALL report a violation for a `skills/<name>/SKILL.md` that exceeds 150 lines, whose `name` differs from its directory, that lacks `description` or `metadata.sdd_version`, whose level-two sections are not When to use, Preconditions, Steps, Refuse when, Done when in order, or whose body contains `.claude`, `.devin`, `.agents` or an agent product name.
 
 #### Scenario: Vendor path in body
 - GIVEN a skill body mentioning `.claude/skills`
@@ -273,7 +277,33 @@ When run on this repository and on the trial sandbox at the state they are in wh
 - WHEN `python3 specs/validate.py` runs at its root
 - THEN the exit code is 0
 
+### REQ-007-02: Block-style list diagnostic
+Origin: 007
+
+When a frontmatter list is written in block style, one item per line starting with a dash, the validator SHALL report a violation on that file naming the key and the `[a, b]` form to use.
+
+#### Scenario: Block list under capabilities
+- GIVEN a `spec.md` whose frontmatter has `capabilities:` followed by `  - auth` on the next line
+- WHEN the validator runs
+- THEN a violation names `capabilities` and the form `[a, b]`
+
+### REQ-007-03: Ticket numbering in the validator
+Origin: 007
+
+When the constitution says `numbering: ticket`, the validator SHALL accept change directories named `KEY-123-name_of_change`, where KEY is upper-case letters and digits, and SHALL require the `id` to be `KEY-123`; when the constitution says `numbering: sequential`, such a directory SHALL be a violation.
+
+#### Scenario: Ticket project
+- GIVEN `numbering: ticket` and a directory `specs/changes/ABC-123-passwordless_login/` with `id: "ABC-123"`
+- WHEN the validator runs
+- THEN no naming or id violation is reported
+
+#### Scenario: Sequential project
+- GIVEN `numbering: sequential` and the same directory
+- WHEN the validator runs
+- THEN a violation cites REQ-001-02
+
 ## Retired
 
 ## History
 - 003 (2026-11-08): Spec validator
+- 007 (2026-11-08): Fixes from the 0.2.0 review

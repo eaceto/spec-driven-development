@@ -1,7 +1,7 @@
 ---
 id: "007"
 title: Fixes from the 0.2.0 review
-status: done
+status: archived
 tier: standard
 owner: maintainers
 capabilities: [website, skills, validator, spec-layout]

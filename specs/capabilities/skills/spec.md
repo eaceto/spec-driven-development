@@ -15,13 +15,20 @@ The six procedures that carry a change through the lifecycle: init, new, plan, i
 
 ### REQ-002-01: Skill format
 Origin: 002
+Changed in: 007
 
-Every skill SHALL live at `skills/<name>/SKILL.md` with frontmatter `name`, `description` and `metadata` holding `version` and `sdd_version`, and SHALL not exceed 150 lines including frontmatter.
+
+Every skill SHALL live at `skills/<name>/SKILL.md` with frontmatter `name`, `description` and `metadata` holding `sdd_version`, and SHALL not exceed 150 lines including frontmatter.
 
 #### Scenario: Oversized skill
 - GIVEN a `SKILL.md` of 180 lines
 - WHEN the skills are validated
 - THEN the skill is reported as exceeding the limit
+
+#### Scenario: Missing version
+- GIVEN a `SKILL.md` without `metadata.sdd_version`
+- WHEN the skills are validated
+- THEN the skill is reported
 
 ### REQ-002-02: Skill body sections
 Origin: 002
@@ -214,3 +221,4 @@ When a validator is installed in the project, every skill SHALL run it before re
 - 002 (2026-11-08): Lifecycle skills
 - 005 (2026-11-08): Skill clarifications from the first tutorial run
 - 006 (2026-11-08): Clarifications from the 0.2.0 review
+- 007 (2026-11-08): Fixes from the 0.2.0 review

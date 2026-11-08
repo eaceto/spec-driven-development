@@ -31,13 +31,20 @@ When a project adopts the method, the project SHALL contain a top-level `specs/`
 
 ### REQ-001-02: Change directory naming
 Origin: 001
+Changed in: 007
 
-When a change is created, its directory SHALL be named `NNN-name_of_change`, where NNN is three digits and the name is lowercase words joined by underscores.
 
-#### Scenario: Valid name
-- GIVEN a new change titled "Passwordless login"
+When a change is created, its directory SHALL be named `NNN-name_of_change` where NNN is three digits, or `KEY-123-name_of_change` where `KEY-123` is a tracker key when the constitution says `numbering: ticket`, and the name is lowercase words joined by underscores.
+
+#### Scenario: Valid sequential name
+- GIVEN a new change titled "Passwordless login" and `numbering: sequential`
 - WHEN its directory is created
 - THEN the directory is `012-passwordless_login` or an equivalent lowercase underscore name with a three-digit prefix
+
+#### Scenario: Valid ticket name
+- GIVEN a new change for tracker key ABC-123 and `numbering: ticket`
+- WHEN its directory is created
+- THEN the directory is `ABC-123-passwordless_login` and the `id` is `ABC-123`
 
 #### Scenario: Invalid name rejected
 - GIVEN a directory named `12-Passwordless-Login`
@@ -184,3 +191,4 @@ When a change or requirement is referenced from outside its repository, the refe
 ## History
 - 001 (2026-11-08): Spec layout and lifecycle
 - 003 (2026-11-08): Spec validator
+- 007 (2026-11-08): Fixes from the 0.2.0 review

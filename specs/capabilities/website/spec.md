@@ -143,8 +143,19 @@ The site SHALL be titled "Spec-driven development" and SHALL declare the reposit
 - WHEN it is read
 - THEN `site_name` is "Spec-driven development" and `site_url` is the github.io address of this repository
 
+### REQ-007-01: Notes example
+Origin: 007
+
+The repository SHALL contain `examples/notes-python`, the tutorial's project as the skills produced it, passing the validator with zero violations, and the site SHALL tell its story on one page linked from the tutorial's last step.
+
+#### Scenario: Example validates
+- GIVEN `examples/notes-python`
+- WHEN `python3 specs/validate.py --root examples/notes-python` runs
+- THEN the exit code is 0
+
 ## Retired
 
 ## History
 - 004 (2026-11-08): Teaching site on GitHub Pages
 - 006 (2026-11-08): Clarifications from the 0.2.0 review
+- 007 (2026-11-08): Fixes from the 0.2.0 review
