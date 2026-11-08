@@ -1,7 +1,7 @@
 ---
 id: "002"
 title: Lifecycle skills
-status: approved
+status: in-progress
 tier: standard
 owner: maintainers
 capabilities: [skills]
