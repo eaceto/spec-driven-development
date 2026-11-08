@@ -1,14 +1,14 @@
 ---
 id: "004"
 title: Teaching site on GitHub Pages
-status: draft
+status: approved
 tier: standard
 owner: maintainers
 capabilities: [website, ci]
 ticket:
 docs:
-approved_by:
-approved_at:
+approved_by: Ezequiel Aceto
+approved_at: 2026-11-08
 created: 2026-11-08
 updated: 2026-11-08
 ---
