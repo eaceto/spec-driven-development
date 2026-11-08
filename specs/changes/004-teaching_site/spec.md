@@ -1,7 +1,7 @@
 ---
 id: "004"
 title: Teaching site on GitHub Pages
-status: approved
+status: in-progress
 tier: standard
 owner: maintainers
 capabilities: [website, ci]
