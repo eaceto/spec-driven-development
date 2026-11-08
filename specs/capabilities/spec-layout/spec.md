@@ -15,13 +15,20 @@ Where specs live and what they look like: the layout under `specs/`, how changes
 
 ### REQ-001-01: Directory layout
 Origin: 001
+Changed in: 003
 
-When a project adopts the method, the project SHALL contain a top-level `specs/` directory holding `constitution.md`, `INDEX.md`, `templates/`, `capabilities/`, `changes/` and `archive/`.
+
+When a project adopts the method, the project SHALL contain a top-level `specs/` directory holding `constitution.md`, `INDEX.md`, `templates/`, `capabilities/`, `changes/` and `archive/`, and optionally `validate.py`.
 
 #### Scenario: Fresh project
 - GIVEN a repository with no `specs/` directory
 - WHEN the method is initialised
 - THEN `specs/` exists with exactly those six entries, and `capabilities/`, `changes/` and `archive/` may be empty
+
+#### Scenario: Validator installed
+- GIVEN the six entries
+- WHEN the install step adds `validate.py`
+- THEN the layout is still valid and nothing else may be added
 
 ### REQ-001-02: Change directory naming
 Origin: 001
@@ -177,3 +184,4 @@ When a change or requirement is referenced from outside its repository, the refe
 
 ## History
 - 001 (2026-11-08): Spec layout and lifecycle
+- 003 (2026-11-08): Spec validator

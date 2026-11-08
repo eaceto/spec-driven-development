@@ -1,7 +1,7 @@
 ---
 id: "003"
 title: Spec validator
-status: done
+status: archived
 tier: standard
 owner: maintainers
 capabilities: [validator, spec-layout]
