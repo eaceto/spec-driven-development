@@ -64,6 +64,8 @@ nav:
       - 6. Verify and archive: tutorial/06-verify-archive.md
   - For developers: for-developers.md
   - For team leads: for-team-leads.md
+  - Adopting an existing project: adopting.md
+  - Questions people ask: questions.md
   - Agents: agents.md
   - Examples:
       - A Go project: examples/greenfield-go.md
