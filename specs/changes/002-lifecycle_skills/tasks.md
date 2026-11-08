@@ -8,7 +8,7 @@
 
 - [x] T02 Write `skills/sdd-init/SKILL.md` covering new and existing projects [REQ-002-07, REQ-002-08]
 - [x] T03 Write `skills/sdd-new/SKILL.md` [REQ-002-09, REQ-002-10, REQ-002-18]
-- [ ] T04 Write `skills/sdd-plan/SKILL.md` including quick-tier handling [REQ-002-11, REQ-002-12, REQ-002-18]
+- [x] T04 Write `skills/sdd-plan/SKILL.md` including quick-tier handling [REQ-002-11, REQ-002-12, REQ-002-18]
 - [ ] T05 Write `skills/sdd-implement/SKILL.md` [REQ-002-13, REQ-002-14]
 - [ ] T06 Write `skills/sdd-verify/SKILL.md` [REQ-002-15, REQ-002-18]
 - [ ] T07 Write `skills/sdd-archive/SKILL.md` [REQ-002-16, REQ-002-17, REQ-002-18]
