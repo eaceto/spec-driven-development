@@ -50,4 +50,4 @@ The constitution and the validator key arrive in the next step, when `sdd-init` 
 
     Devin reads `.agents/skills/` and `AGENTS.md` on its own. Ask for what you want in plain language.
 
-Next: 2. Set up the project.
+Next: [2. Set up the project](02-init.md).

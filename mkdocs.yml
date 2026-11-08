@@ -57,6 +57,7 @@ nav:
   - Your first change:
       - Overview: tutorial/index.md
       - 1. Install the skills: tutorial/01-install.md
+      - 2. Set up the project: tutorial/02-init.md
   - For developers: for-developers.md
   - For team leads: for-team-leads.md
   - Agents: agents.md
