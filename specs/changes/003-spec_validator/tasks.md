@@ -2,7 +2,7 @@
 
 ## Setup
 
-- [ ] T01 Create `specs/validate.py` with the command line, frontmatter parser, tree model, rule registry, report and exit codes, plus `--rules` [REQ-003-01, REQ-003-02, REQ-003-03, REQ-003-04]
+- [x] T01 Create `specs/validate.py` with the command line, frontmatter parser, tree model, rule registry, report and exit codes, plus `--rules` [REQ-003-01, REQ-003-02, REQ-003-03, REQ-003-04]
 
 ## Implementation
 
