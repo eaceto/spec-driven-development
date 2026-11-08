@@ -47,6 +47,7 @@ CAPABILITY_SECTIONS = ["Purpose", "Requirements", "Retired", "History"]
 REQUIREMENTS_TRAILING_SECTIONS = ["Modified requirements", "Removed requirements", "Not testable"]
 INDEX_SECTIONS = ["Active changes", "Capabilities", "Archived changes"]
 SKILL_SECTIONS = ["When to use", "Preconditions", "Steps", "Refuse when", "Done when"]
+COMMENT_STARTS = ("#", "//", "/*", "*", "--", "<!--")  # REQ-003-13: comment-only lines do not count as coverage
 VENDOR_PATHS = [".claude", ".devin", ".agents"]
 VENDOR_NAMES = re.compile(r"\b(claude|devin|cursor|copilot|codex|windsurf)\b", re.IGNORECASE)
 
@@ -225,8 +226,9 @@ class Project:
         return {rid: cap for cap in self.capabilities for rid in cap.retired_ids}
 
     def test_corpus(self) -> str:
-        """Text of every file outside specs/ whose path contains 'test', with underscores read as hyphens so that
-        a test named test_REQ_014_03 counts for REQ-014-03. REQ-001-20 counts a requirement as tested when its id appears here."""
+        """Text of every file outside specs/ whose path contains 'test', minus comment-only lines, with underscores read
+        as hyphens so that a test named test_REQ_014_03 counts for REQ-014-03. REQ-001-20 counts a requirement as tested
+        when its id appears here."""
         if self._corpus is None:
             parts: List[str] = []
             for p in sorted(self.root.rglob("*")):
@@ -235,9 +237,11 @@ class Project:
                     continue
                 if p.is_file() and "test" in str(rel).lower():
                     try:
-                        parts.append(p.read_text(encoding="utf-8", errors="ignore"))
+                        text = p.read_text(encoding="utf-8", errors="ignore")
                     except OSError:
                         continue
+                    # An id on a comment-only line does not count: the floor is an id in code (REQ-003-13).
+                    parts.append("\n".join(l for l in text.splitlines() if not l.lstrip().startswith(COMMENT_STARTS)))
             self._corpus = "\n".join(parts).replace("_", "-")
         return self._corpus
 

@@ -138,7 +138,8 @@ class Fixture:
     def add_tests_mentioning(self, ids):
         tests = self.root / "tests"
         tests.mkdir(exist_ok=True)
-        (tests / "test_fixture.py").write_text("# " + " ".join(ids) + "\n")
+        names = "\n".join(f"def test_{i.replace('-', '_')}():\n    pass\n" for i in ids)
+        (tests / "test_fixture.py").write_text(names)
 
     # -- capabilities ---------------------------------------------------
     def add_capability(self, cid="auth", blocks=(), retired=()):
@@ -440,6 +441,18 @@ class TestStatus(ValidatorCase):
         req.write_text(with_req(req.read_text(), req_block("REQ-014-03")))
         self.assert_violation(self.run_validator(), "status-done", "REQ-001-20", text="REQ-014-03: no test references it")
         req.write_text(req.read_text().replace("## Not testable\n", "## Not testable\n\n- REQ-014-03: needs a person.\n"))
+        self.assert_no_violation(self.run_validator(), "status-done")
+
+    def test_id_only_in_a_comment_does_not_count_REQ_003_13_REQ_001_20(self):
+        ch = self.fx.add_change(status="done")
+        ids = self.fx.change_ids("014")
+        self.fx.add_tests_mentioning(ids)
+        self.assert_clean()
+        (self.fx.root / "tests" / "test_comment.py").write_text("# REQ-014-03 is mentioned here only in a comment\n")
+        req = ch.path / "requirements.md"
+        req.write_text(with_req(req.read_text(), req_block("REQ-014-03")))
+        self.assert_violation(self.run_validator(), "status-done", "REQ-001-20", text="REQ-014-03: no test references it")
+        (self.fx.root / "tests" / "test_comment.py").write_text("def test_REQ_014_03(): pass\n")
         self.assert_no_violation(self.run_validator(), "status-done")
 
     def test_archived_requires_location_merge_and_gate3_REQ_003_13_REQ_001_21(self):
