@@ -2,7 +2,7 @@
 name: sdd-plan
 description: Plan an approved change in a project that uses spec-driven development. Writes requirements grouped by capability with stable IDs, a design with recorded decisions, tasks citing requirement IDs and the checklist, then moves the change to in-progress. Refuses on a draft. Use when asked to plan, write requirements for, design or break down an approved change.
 metadata:
-  version: 0.1.0
+  version: 0.1.1
   sdd_version: 0.1.0
 ---
 
@@ -21,7 +21,7 @@ A change has passed Gate 1 and needs its requirements, design and tasks before a
 
 1. Check the status. If it is not `approved`, stop and say what applies: draft needs Gate 1; in-progress is already planned; done and archived are closed.
 2. Check the tier. For `quick`, read `spec.md` once more. If what it describes adds, modifies or removes any behaviour, stop and ask the author to raise the tier to standard. Otherwise write only `tasks.md` and `checklist.md`, skipping to step 6.
-3. Write `requirements.md` from the template. One `## Capability: <id>` section per capability in the frontmatter. Derive requirements from What should be done and Success criteria. Each requirement has a heading `### REQ-NNN-xx: Title`, numbered from 01 across the whole file, one SHALL statement shaped as "When <trigger>, the <subject> SHALL <behaviour>" or "The <subject> SHALL <behaviour>", an optional `Ref:` line, and at least one scenario with GIVEN, WHEN and THEN bullets. Compare with the capability's existing requirements: one this change rewrites goes under Modified requirements with its original ID and `Changed in: NNN`; one it retires goes under Removed requirements with the reason. If a requirement belongs to a capability the frontmatter does not list, stop and report it. The author adds it to `spec.md`, and that capability's owner reviews.
+3. Write `requirements.md` from the template, removing the template's guidance comments as you fill it; do the same for every file below. One `## Capability: <id>` section per capability in the frontmatter. Derive requirements from What should be done and Success criteria. Each requirement has a heading `### REQ-NNN-xx: Title`, numbered from 01 across the whole file, one SHALL statement shaped as "When <trigger>, the <subject> SHALL <behaviour>" or "The <subject> SHALL <behaviour>", an optional `Ref:` line, and at least one scenario with GIVEN, WHEN and THEN bullets. Compare with the capability's existing requirements: one this change rewrites goes under Modified requirements with its original ID and `Changed in: NNN`; one it retires goes under Removed requirements with the reason. If a requirement belongs to a capability the frontmatter does not list, stop and report it. The author adds it to `spec.md`, and that capability's owner reviews.
 4. Write `design.md` from the template: the approach, at least one decision with alternatives and why, the interfaces and data this change touches, risks, and open questions. Open questions must be closed before Gate 2, so resolve them now where you can.
 5. For `full` tier, write `guardrails.md` from the template using the constraints in `spec.md`.
 6. Write `tasks.md` from the template. Order the tasks. Every task cites the requirement IDs it satisfies in brackets; a task with none is marked `[setup]`. End with verification tasks: tests covering every ID, and documentation.
