@@ -17,7 +17,7 @@
 - [x] T10 Skills rules [REQ-003-17]
 - [x] T11 `tests/test_validate.py` with template-built fixtures, one passing and one failing case per rule [REQ-003-19]
 - [x] T12 `install.sh` copies the validator and sets the `validator` key; set the key in this repository's constitution; document in `docs/method.md` and the skills README [REQ-003-18]
-- [ ] T13 Run on this repository and on the trial sandbox; fix genuine violations in the specs or the templates, never by weakening a rule without a reviewed edit [REQ-003-20]
+- [x] T13 Run on this repository and on the trial sandbox; fix genuine violations in the specs or the templates, never by weakening a rule without a reviewed edit [REQ-003-20]
 
 ## Verification
 

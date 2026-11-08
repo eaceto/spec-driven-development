@@ -14,8 +14,7 @@ Maintained by the skills. `sdd-new`, `sdd-plan`, `sdd-verify` and `sdd-archive` 
 
 | Id | Title | Owner | Requirements | Updated |
 |---|---|---|---|---|
-| | No capabilities yet. The first ones are created when change 001 is archived. | | | |
 
 ## Archived changes
 
-None yet.
+0 archived. See `specs/archive/`.
