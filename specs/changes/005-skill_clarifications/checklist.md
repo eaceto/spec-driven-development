@@ -11,12 +11,15 @@
 
 ## Gate 2: done
 
-- [ ] Every success criterion in spec.md is met
-- [ ] Every task in tasks.md is ticked
-- [ ] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
-- [ ] No open questions remain in design.md
-- [ ] Constitution principles that applied were checked, and none was violated
-- [ ] Documentation that users or operators rely on is updated
+- [x] Every success criterion in spec.md is met
+  - Evidence, 2026-11-08: a fresh init followed by hand from the revised skill commits six entries under specs/ (the three empty folders carry .gitkeep); every skill is between 42 and 52 lines; validator and tests green; the tutorial note is updated at archive.
+- [x] Every task in tasks.md is ticked
+- [x] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
+  - Quick tier: no requirements were added, modified or removed.
+- [x] No open questions remain in design.md
+  - Quick tier: no design file.
+- [x] Constitution principles that applied were checked, and none was violated
+- [x] Documentation that users or operators rely on is updated
 
 ## Gate 3: archived
 
