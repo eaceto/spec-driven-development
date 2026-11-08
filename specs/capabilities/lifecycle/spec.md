@@ -102,3 +102,4 @@ When a commit belongs to a change, the commit message SHALL carry a `Change: NNN
 
 ## History
 - 001 (2026-11-08): Spec layout and lifecycle
+- 006 (2026-11-08): Clarifications from the 0.2.0 review

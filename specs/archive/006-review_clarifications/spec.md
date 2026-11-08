@@ -1,7 +1,7 @@
 ---
 id: "006"
 title: Clarifications from the 0.2.0 review
-status: done
+status: archived
 tier: quick
 owner: maintainers
 capabilities: [skills, website, lifecycle]

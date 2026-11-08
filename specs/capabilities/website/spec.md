@@ -147,3 +147,4 @@ The site SHALL be titled "Spec-driven development" and SHALL declare the reposit
 
 ## History
 - 004 (2026-11-08): Teaching site on GitHub Pages
+- 006 (2026-11-08): Clarifications from the 0.2.0 review

@@ -213,3 +213,4 @@ When a validator is installed in the project, every skill SHALL run it before re
 ## History
 - 002 (2026-11-08): Lifecycle skills
 - 005 (2026-11-08): Skill clarifications from the first tutorial run
+- 006 (2026-11-08): Clarifications from the 0.2.0 review
