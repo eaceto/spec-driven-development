@@ -150,6 +150,14 @@ class TestAuthoredPages(unittest.TestCase):
         page = (DOCS / "examples/greenfield-go.md").read_text(encoding="utf-8")
         self.assertIn("examples/greenfield-go", page)
 
+    def test_notes_example_validates_and_is_linked_REQ_007_01(self):
+        import subprocess
+        result = subprocess.run([sys.executable, "-B", str(ROOT / "specs/validate.py"), "--root", str(ROOT / "examples/notes-python")],
+                                capture_output=True, text=True)
+        self.assertEqual(0, result.returncode, result.stdout)
+        self.assertIn("notes-python", (DOCS / "tutorial/06-verify-archive.md").read_text(encoding="utf-8"))
+        self.assertTrue((DOCS / "examples/notes-python.md").is_file())
+
     def test_tutorial_steps_state_agent_and_date_REQ_004_04(self):
         steps = sorted((DOCS / "tutorial").glob("0*.md"))
         self.assertTrue(steps)

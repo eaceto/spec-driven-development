@@ -113,4 +113,4 @@ None.
 
 ## Not testable
 
-- REQ-007-01's narrative page is reviewed by a person; the folder's validation is tested.
+- The narrative page of the notes example is reviewed by a person; the folder's validation is tested.
