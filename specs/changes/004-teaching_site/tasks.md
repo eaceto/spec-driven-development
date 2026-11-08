@@ -6,7 +6,7 @@
 
 ## Implementation
 
-- [ ] T02 Build hook generating the skills, templates and validator pages [REQ-004-06]
+- [x] T02 Build hook generating the skills, templates and validator pages [REQ-004-06]
 - [ ] T03 Deploy workflow and checks workflow [REQ-004-01, REQ-004-13]
 - [ ] T04 `examples/greenfield-go` from the trial, validator-clean, and its narrative page [REQ-004-08]
 - [ ] T05 Home page and the what-and-why page [REQ-004-03, REQ-004-11]
