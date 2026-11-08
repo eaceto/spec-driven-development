@@ -84,6 +84,8 @@ def parse_frontmatter(text: str) -> Tuple[Optional[Dict[str, object]], str, Opti
         line = _strip_comment(raw)
         if not line.strip():
             continue
+        if line.lstrip().startswith("- ") and parent is not None:
+            return None, "\n".join(lines[end + 1:]), f"block list: {parent} uses one item per line; write {parent}: [a, b]"
         if ":" not in line:
             return None, "\n".join(lines[end + 1:]), f"frontmatter line without a colon: {raw.strip()}"
         key, _, value = line.strip().partition(":")
@@ -557,14 +559,15 @@ def check_spec_order(project: Project, ch: Change) -> Iterator[Violation]:
         yield Violation(path, "spec-order", ["REQ-001-06"], "Scope needs an Out subsection with at least one non-goal")
 
 
-@rule("spec-frontmatter", ["REQ-001-07", "REQ-001-16", "REQ-001-17"],
+@rule("spec-frontmatter", ["REQ-001-07", "REQ-001-16", "REQ-001-17", "REQ-007-02"],
       "spec.md frontmatter: fields present, status and tier valid, dates well formed, approval fields set once approved", "change")
 def check_spec_frontmatter(project: Project, ch: Change) -> Iterator[Violation]:
     if "spec.md" not in ch.files:
         return
     path = f"{ch.rel}/spec.md"
     if ch.fm_error:
-        yield Violation(path, "spec-frontmatter", ["REQ-001-07"], ch.fm_error)
+        reqs = ["REQ-001-07", "REQ-007-02"] if ch.fm_error.startswith("block list") else ["REQ-001-07"]
+        yield Violation(path, "spec-frontmatter", reqs, ch.fm_error)
         return
     for key in CHANGE_FM_KEYS:
         if key not in ch.fm:

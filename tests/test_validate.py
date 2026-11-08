@@ -354,6 +354,12 @@ class TestSpecFile(ValidatorCase):
         spec.write_text(base.replace("owner: team-x\n", ""))
         self.assert_violation(self.run_validator(), "spec-frontmatter", "REQ-001-07", text="missing field owner")
 
+    def test_block_style_list_is_reported_REQ_007_02(self):
+        ch = self.fx.add_change()
+        spec = ch.path / "spec.md"
+        spec.write_text(spec.read_text().replace("capabilities: [auth]", "capabilities:\n  - auth"))
+        self.assert_violation(self.run_validator(), "spec-frontmatter", "REQ-007-02", text="capabilities: [a, b]")
+
 
 class TestRequirements(ValidatorCase):
     def test_grammar_REQ_003_10_REQ_001_08(self):
