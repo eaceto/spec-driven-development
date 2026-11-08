@@ -222,6 +222,14 @@ class TestFileAndCli(ValidatorCase):
                                                              "subprocess", "sys", "typing"}))
         self.assertTrue(modules <= allowed, modules - allowed)
 
+    def test_syntax_and_apis_are_python_3_9_compatible_REQ_003_01(self):
+        source = VALIDATOR.read_text()
+        ast.parse(source, feature_version=(3, 9))  # rejects syntax introduced after 3.9
+        newer_apis = ["zip(strict", "removeprefix(", "removesuffix(", "slots=True", "kw_only", "TypeAlias",
+                      "stdlib_module_names", "pairwise(", "bisect(", "ExceptionGroup", "tomllib"]
+        for api in newer_apis:
+            self.assertNotIn(api, source, f"{api} needs a Python newer than 3.9")
+
     def run_cli(self, *args, root=None):
         return subprocess.run([sys.executable, "-B", str(VALIDATOR), "--root", str(root or self.fx.root), *args],
                               capture_output=True, text=True)

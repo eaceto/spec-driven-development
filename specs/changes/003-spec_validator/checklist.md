@@ -11,12 +11,16 @@
 
 ## Gate 2: done
 
-- [ ] Every success criterion in spec.md is met
-- [ ] Every task in tasks.md is ticked
-- [ ] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
-- [ ] No open questions remain in design.md
-- [ ] Constitution principles that applied were checked, and none was violated
-- [ ] Documentation that users or operators rely on is updated
+- [x] Every success criterion in spec.md is met
+  - Evidence, 2026-11-08: `python3 specs/validate.py` reports 0 violations on this repository and on the trial sandbox; `--rules` names REQ-001-01 to REQ-001-23 except 12 and 15, which have direct tests; each of the seven listed faults has a failing test case in tests/test_validate.py; the 3.9 promise is checked statically (parser feature_version 3.9 plus a scan for newer APIs) because no 3.9 interpreter was available here.
+- [x] Every task in tasks.md is ticked
+- [x] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
+  - Evidence, 2026-11-08: 31 tests pass; the suite names every REQ-003 id and REQ-001-01, the one modified requirement.
+- [x] No open questions remain in design.md
+- [x] Constitution principles that applied were checked, and none was violated
+  - Purpose before mechanism, one structure, teachable in a sentence (every rule has a one-line description), tool-agnostic (standard library only), lifecycle enforced not remembered (this change is the enforcement), small context (one file), dogfooding.
+- [x] Documentation that users or operators rely on is updated
+  - docs/method.md gained "The validator"; skills/README.md and install.sh describe the key it sets.
 
 ## Gate 3: archived
 
