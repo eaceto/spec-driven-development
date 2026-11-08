@@ -11,12 +11,13 @@
 
 ## Gate 2: done
 
-- [ ] Every success criterion in spec.md is met
-- [ ] Every task in tasks.md is ticked
-- [ ] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
-- [ ] No open questions remain in design.md
-- [ ] Constitution principles that applied were checked, and none was violated
-- [ ] Documentation that users or operators rely on is updated
+- [x] Every success criterion in spec.md is met
+  - Evidence, 2026-11-08: an id in prose under Not testable now yields an exemption-form violation and a coverage violation, proven in the suite; every archived change and both examples pass the validator; skills 41 to 52 lines; 53 tests green; strict build green.
+- [x] Every task in tasks.md is ticked
+- [x] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
+- [x] No open questions remain in design.md
+- [x] Constitution principles that applied were checked, and none was violated
+- [x] Documentation that users or operators rely on is updated
 
 ## Gate 3: archived
 

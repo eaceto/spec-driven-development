@@ -1,7 +1,7 @@
 ---
 id: "008"
 title: Explicit exemptions and refusal wording
-status: in-progress
+status: done
 tier: standard
 owner: maintainers
 capabilities: [validator, skills]

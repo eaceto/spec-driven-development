@@ -595,6 +595,14 @@ class TestGitAndSkills(ValidatorCase):
         self.assertFalse(stats["git"], "a project nested in another repository has no history of its own")
         self.assert_no_violation(violations, "commit-trailers")
 
+    def test_refusal_wording_present_REQ_008_02(self):
+        plan = (ROOT / "skills/sdd-plan/SKILL.md").read_text()
+        impl = (ROOT / "skills/sdd-implement/SKILL.md").read_text()
+        init = (ROOT / "skills/sdd-init/SKILL.md").read_text()
+        self.assertIn("approver confirms it", plan)
+        self.assertIn("cites an ID that no requirement defines", impl)
+        self.assertIn("exists and is not empty", init)
+
     def test_skills_REQ_003_17_REQ_002_01_REQ_002_02_REQ_002_03(self):
         skills = self.fx.root / "skills"
         shutil.copytree(ROOT / "skills" / "sdd-new", skills / "sdd-new")

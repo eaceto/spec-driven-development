@@ -7,4 +7,4 @@
 
 ## Verification
 
-- [ ] T03 Validator on this repository and both examples, suite, strict build green [all]
+- [x] T03 Validator on this repository and both examples, suite, strict build green [all]
