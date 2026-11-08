@@ -168,9 +168,9 @@ class Change:
     req_sections: List[str]
     removed_ids: List[str]
     not_testable_ids: Set[str]  # exempt: own bullet, id first, then a reason (REQ-008-01)
-    not_testable_mentions: Set[str] = field(default_factory=set)  # other ids named in the section
     tasks: List[Tuple[bool, str]]
     gates: Dict[int, List[bool]]
+    not_testable_mentions: Set[str] = field(default_factory=set)  # other ids named under Not testable
 
     @property
     def status(self) -> str:
