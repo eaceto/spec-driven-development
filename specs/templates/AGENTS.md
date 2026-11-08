@@ -5,9 +5,10 @@ This repository uses spec-driven development. Follow these rules.
 ## What to load
 
 1. `specs/constitution.md`. Always.
-2. `specs/INDEX.md`. Always.
-3. The one change you are working on, under `specs/changes/`. Read its `spec.md` first.
-4. Only the capability specs that change lists in its `capabilities` frontmatter.
+2. `specs/INDEX.md`. Always. Use it to find the change you need and its directory.
+3. The one change you are working on, under `specs/changes/`. Read its `spec.md` first, then the rest of its files. Listing the directory is fine.
+4. Only the capability specs that change lists in its `capabilities` frontmatter. They live at `specs/capabilities/<id>/spec.md`. A listed capability with no spec yet is normal before its first archive; there is nothing to load.
+5. `specs/templates/` when you are creating or planning files, not otherwise.
 
 Never load every change or every capability. The index exists so you do not have to.
 
