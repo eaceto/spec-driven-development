@@ -73,4 +73,4 @@ The agent stops after every task unless you say otherwise. That pause is where y
 
 For the remaining tasks, say "continue until every task is done". The agent goes task by task, with the same two commits each, and stops at the end.
 
-Next: 6. Verify and archive.
+Next: [6. Verify and archive](06-verify-archive.md).

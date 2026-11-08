@@ -15,7 +15,7 @@ You will take one small change from nothing to an archived capability, with an a
 3. [Start a change](03-new.md): the agent writes the one page that says why and what, and you approve it.
 4. [Plan it](04-plan.md): requirements with scenarios, a design, tasks.
 5. [Implement a task](05-implement.md): one task, tests that name the requirement, a commit with trailers.
-6. Verify and archive: the Gate 2 checklist with evidence, then the merge into a living capability.
+6. [Verify and archive](06-verify-archive.md): the Gate 2 checklist with evidence, then the merge into a living capability.
 
 Every transcript on these pages comes from a real run, with the agent and date stated. The newcomer's answers were scripted so the run could be repeated; the agent's words are its own.
 
