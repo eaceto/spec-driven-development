@@ -167,7 +167,8 @@ class Change:
     capability_sections: List[str]
     req_sections: List[str]
     removed_ids: List[str]
-    not_testable_ids: Set[str]
+    not_testable_ids: Set[str]  # exempt: own bullet, id first, then a reason (REQ-008-01)
+    not_testable_mentions: Set[str] = field(default_factory=set)  # other ids named in the section
     tasks: List[Tuple[bool, str]]
     gates: Dict[int, List[bool]]
 
@@ -336,14 +337,18 @@ def parse_requirement_blocks(lines: Sequence[str], lo: int, hi: int, section: st
     return blocks
 
 
-def parse_requirements_doc(text: str) -> Tuple[List[Requirement], List[str], List[str], List[str], Set[str]]:
-    """Return (requirements, capability section ids, all section names, removed ids, not-testable ids)."""
+EXEMPTION_RE = re.compile(r"^- (REQ-" + CHANGE_ID + r"-\d{2,})\b\W*\w")  # REQ-008-01: own bullet, id first, a reason
+
+
+def parse_requirements_doc(text: str) -> Tuple[List[Requirement], List[str], List[str], List[str], Set[str], Set[str]]:
+    """Return (requirements, capability section ids, all section names, removed ids, exempt ids, other ids mentioned under Not testable)."""
     lines = text.splitlines()
     sections = _h2_sections(lines)
     reqs: List[Requirement] = []
     caps: List[str] = []
     removed: List[str] = []
     not_testable: Set[str] = set()
+    mentions: Set[str] = set()
     first = sections[0][1] - 1 if sections else len(lines)
     reqs.extend(parse_requirement_blocks(lines, 0, first, ""))
     for name, lo, hi in sections:
@@ -356,10 +361,16 @@ def parse_requirements_doc(text: str) -> Tuple[List[Requirement], List[str], Lis
         elif name == "Removed requirements":
             removed.extend(REQ_ID_RE.findall("\n".join(l for l in lines[lo:hi] if l.startswith("- "))))
         elif name == "Not testable":
-            not_testable.update(REQ_ID_RE.findall("\n".join(lines[lo:hi])))
+            for line in lines[lo:hi]:
+                m = EXEMPTION_RE.match(line)
+                if m:
+                    not_testable.add(m.group(1))
+                else:
+                    mentions.update(REQ_ID_RE.findall(line))
+            mentions -= not_testable
         else:
             reqs.extend(parse_requirement_blocks(lines, lo, hi, ""))
-    return reqs, caps, [s[0] for s in sections], removed, not_testable
+    return reqs, caps, [s[0] for s in sections], removed, not_testable, mentions
 
 
 def parse_tasks(text: str) -> List[Tuple[bool, str]]:
@@ -391,15 +402,15 @@ def load_change(project: Project, path: Path, location: str) -> Change:
         parsed, body, fm_error = parse_frontmatter(spec_text)
         fm = parsed or {}
         spec_lines = body.splitlines()
-    reqs, caps, sections, removed, not_testable = [], [], [], [], set()
+    reqs, caps, sections, removed, not_testable, mentions = [], [], [], [], set(), set()
     if "requirements.md" in files:
         text = _read(project, path / "requirements.md")
         if text is not None:
-            reqs, caps, sections, removed, not_testable = parse_requirements_doc(text)
+            reqs, caps, sections, removed, not_testable, mentions = parse_requirements_doc(text)
     tasks = parse_tasks(_read(project, path / "tasks.md") or "") if "tasks.md" in files else []
     gates = parse_checklist(_read(project, path / "checklist.md") or "") if "checklist.md" in files else {}
     return Change(path, rel, path.name, location, m.group(1) if m else None, fm, fm_error, files, spec_lines,
-                  reqs, caps, sections, removed, not_testable, tasks, gates)
+                  reqs, caps, sections, removed, not_testable, tasks, gates, mentions)
 
 
 def load_capability(project: Project, path: Path) -> Capability:
@@ -636,6 +647,13 @@ def check_requirement_grouping(project: Project, ch: Change) -> Iterator[Violati
     for name in REQUIREMENTS_TRAILING_SECTIONS:
         if name not in ch.req_sections:
             yield Violation(path, "requirement-grouping", ["REQ-001-09"], f"missing section '{name}'")
+
+
+@rule("exemption-form", ["REQ-008-01"], "an id under Not testable is exempt only as its own bullet with a reason; other mentions are reported", "change")
+def check_exemption_form(project: Project, ch: Change) -> Iterator[Violation]:
+    for rid in sorted(ch.not_testable_mentions):
+        yield Violation(f"{ch.rel}/requirements.md", "exemption-form", ["REQ-008-01"],
+                        f"{rid} is mentioned under Not testable but not exempted; write `- {rid}: reason` on its own line, or remove the mention")
 
 
 @rule("requirement-id-new", ["REQ-001-10"], "an added requirement id is not already used by a capability", "change")

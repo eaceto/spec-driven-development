@@ -463,6 +463,19 @@ class TestStatus(ValidatorCase):
         req.write_text(req.read_text().replace("## Not testable\n", "## Not testable\n\n- REQ-014-03: needs a person.\n"))
         self.assert_no_violation(self.run_validator(), "status-done")
 
+    def test_exemptions_are_explicit_REQ_008_01_REQ_003_13(self):
+        ch = self.fx.add_change(status="done")
+        self.fx.add_tests_mentioning(self.fx.change_ids("014"))
+        req = ch.path / "requirements.md"
+        base = with_req(req.read_text(), req_block("REQ-014-03"))
+        req.write_text(base.replace("## Not testable\n", "## Not testable\n\nREQ-014-03 is hard to test.\n"))
+        found = self.run_validator()
+        self.assert_violation(found, "exemption-form", "REQ-008-01", text="- REQ-014-03: reason")
+        self.assert_violation(found, "status-done", "REQ-001-20", text="REQ-014-03")
+        req.write_text(base.replace("## Not testable\n", "## Not testable\n\n- REQ-014-03: needs a person to judge readability.\n"))
+        self.assert_no_violation(self.run_validator(), "exemption-form")
+        self.assert_no_violation(self.run_validator(), "status-done")
+
     def test_id_only_in_a_comment_does_not_count_REQ_003_13_REQ_001_20(self):
         ch = self.fx.add_change(status="done")
         ids = self.fx.change_ids("014")
