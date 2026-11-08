@@ -10,7 +10,7 @@
 - [x] T03 Deploy workflow and checks workflow [REQ-004-01, REQ-004-13]
 - [x] T04 `examples/greenfield-go` from the trial, validator-clean, and its narrative page [REQ-004-08]
 - [x] T05 Home page and the what-and-why page [REQ-004-03, REQ-004-11]
-- [ ] T06 Agents page [REQ-004-07]
+- [x] T06 Agents page [REQ-004-07]
 - [ ] T07 Entry pages for developers and team leads [REQ-004-05]
 - [ ] T08 Tutorial, six steps, with Claude Code transcripts from fresh runs [REQ-004-04]
 - [ ] T09 Devin CLI transcripts added to the tutorial tabs, from the owner's runs [REQ-004-04]
