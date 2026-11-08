@@ -2,7 +2,6 @@
 name: sdd-init
 description: Set up spec-driven development in a project that has no specs/ directory. Creates the layout, constitution, index, templates and agent entry file for a new project, or adopts an existing codebase by deriving the constitution from existing documents and writing a capability map without requirements. Use when asked to start, adopt or initialise spec-driven development.
 metadata:
-  version: 0.1.1
   sdd_version: 0.2.0
 ---
 

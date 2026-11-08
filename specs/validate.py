@@ -880,7 +880,7 @@ def check_commit_trailers(project: Project) -> Iterator[Violation]:
 # --- Skills, when the project ships them ---
 
 @rule("skills", ["REQ-002-01", "REQ-002-02", "REQ-002-03"],
-      "skills/<name>/SKILL.md: within 150 lines, frontmatter complete, five sections in order, vendor-neutral body")
+      "skills/<name>/SKILL.md: within 150 lines, frontmatter with name, description and sdd_version, five sections in order, vendor-neutral body")
 def check_skills(project: Project) -> Iterator[Violation]:
     skills = project.root / "skills"
     if not skills.is_dir():
@@ -903,7 +903,7 @@ def check_skills(project: Project) -> Iterator[Violation]:
         fm = fm or {}
         if fm.get("name") != d.name:
             yield Violation(rel, "skills", ["REQ-002-01"], f"name is {fm.get('name')!r} but the directory is {d.name}")
-        for key in ("description", "metadata.version", "metadata.sdd_version"):
+        for key in ("description", "metadata.sdd_version"):
             if not fm.get(key):
                 yield Violation(rel, "skills", ["REQ-002-01"], f"missing {key}")
         h2 = [s[0] for s in _h2_sections(body.splitlines())]

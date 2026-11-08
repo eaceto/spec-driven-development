@@ -15,7 +15,7 @@ Gate 1, from draft to approved, is the only transition a person performs by hand
 
 ## Format
 
-- Frontmatter: `name` matching the directory, `description` saying what the skill does and when to use it, `metadata.version` and `metadata.sdd_version`.
+- Frontmatter: `name` matching the directory, `description` saying what the skill does and when to use it, and `metadata.sdd_version`, the release of the method the skill belongs to.
 - Body sections, in this order: When to use, Preconditions, Steps, Refuse when, Done when.
 - Limit: 150 lines including frontmatter. A skill that needs more is doing two jobs.
 - Vendor-neutral bodies: no tool-specific path, command or product name. Those belong in `install.sh` and `docs/method.md`.
