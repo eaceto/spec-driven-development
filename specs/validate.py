@@ -679,6 +679,78 @@ def check_requirement_id_unique(project: Project) -> Iterator[Violation]:
             yield Violation(f"{cap.rel}/spec.md", "requirement-id-unique", ["REQ-001-10"], f"{rid} is retired here but active in {where[rid]}")
 
 
+# --- Status consistency ---
+
+@rule("status-draft", ["REQ-001-19"], "a draft holds spec.md only", "change")
+def check_status_draft(project: Project, ch: Change) -> Iterator[Violation]:
+    if ch.status != "draft":
+        return
+    for name in sorted(ch.files - {"spec.md"}):
+        yield Violation(f"{ch.rel}/{name}", "status-draft", ["REQ-001-19"], "a draft holds spec.md only; design and code wait for Gate 1")
+
+
+@rule("status-done", ["REQ-001-20"],
+      "a done change has every task and Gate 2 item ticked and every requirement referenced by a test or listed as not testable", "change")
+def check_status_done(project: Project, ch: Change) -> Iterator[Violation]:
+    if ch.status not in ("done", "archived"):
+        return
+    for ticked, tid in ch.tasks:
+        if not ticked:
+            yield Violation(f"{ch.rel}/tasks.md", "status-done", ["REQ-001-20"], f"{tid} is not ticked")
+    gate = ch.gates.get(2)
+    if gate is None:
+        yield Violation(f"{ch.rel}/checklist.md", "status-done", ["REQ-001-20"], "no Gate 2 section")
+    elif not all(gate):
+        yield Violation(f"{ch.rel}/checklist.md", "status-done", ["REQ-001-20"], f"{gate.count(False)} Gate 2 items not ticked")
+    if "requirements.md" in ch.files:
+        corpus = project.test_corpus()
+        for r in ch.added() + ch.modified():
+            if r.id not in corpus and r.id not in ch.not_testable_ids:
+                yield Violation(f"{ch.rel}/requirements.md", "status-done", ["REQ-001-20"],
+                                f"{r.id}: no test references it and it is not listed under Not testable")
+
+
+@rule("status-archived", ["REQ-001-21"],
+      "archived changes sit in archive/ with requirements merged and Gate 3 ticked; archive/ holds only archived changes", "change")
+def check_status_archived(project: Project, ch: Change) -> Iterator[Violation]:
+    path = f"{ch.rel}/spec.md"
+    if ch.location == "archive" and ch.status != "archived":
+        yield Violation(path, "status-archived", ["REQ-001-21"], f"under specs/archive/ but status is {ch.status}")
+    if ch.status != "archived":
+        return
+    if ch.location == "changes":
+        yield Violation(path, "status-archived", ["REQ-001-21"], "status archived but still under specs/changes/; the archive step moves the directory")
+    gate = ch.gates.get(3)
+    if gate is None:
+        yield Violation(f"{ch.rel}/checklist.md", "status-archived", ["REQ-001-21"], "no Gate 3 section")
+    elif not all(gate):
+        yield Violation(f"{ch.rel}/checklist.md", "status-archived", ["REQ-001-21"], f"{gate.count(False)} Gate 3 items not ticked")
+    rpath = f"{ch.rel}/requirements.md"
+    active, retired = project.active_ids(), project.retired_ids()
+    for r in ch.added():
+        if r.id not in active:
+            yield Violation(rpath, "status-archived", ["REQ-001-21"], f"{r.id}: not found in any capability spec")
+        elif ch.num and active[r.id][1].origin != ch.num:
+            yield Violation(rpath, "status-archived", ["REQ-001-21"], f"{r.id}: capability copy says Origin {active[r.id][1].origin!r}, expected {ch.num}")
+    for r in ch.modified():
+        if r.id not in active:
+            yield Violation(rpath, "status-archived", ["REQ-001-21"], f"{r.id}: modified here but not active in any capability")
+        elif ch.num and ch.num not in active[r.id][1].changed_in:
+            yield Violation(rpath, "status-archived", ["REQ-001-21"], f"{r.id}: capability copy lacks 'Changed in: {ch.num}'")
+    for rid in ch.removed_ids:
+        if rid not in retired:
+            yield Violation(rpath, "status-archived", ["REQ-001-21"], f"{rid}: removed here but not under Retired in any capability")
+
+
+@rule("status-forward", ["REQ-001-16"], "status never moves backwards relative to the committed spec.md (git)", "change")
+def check_status_forward(project: Project, ch: Change) -> Iterator[Violation]:
+    if not project.git or ch.status not in STATUSES:
+        return
+    previous = project.git_previous_status(ch)
+    if previous in STATUSES and STATUSES.index(ch.status) < STATUSES.index(previous):
+        yield Violation(f"{ch.rel}/spec.md", "status-forward", ["REQ-001-16"], f"status moved backwards from {previous} to {ch.status}")
+
+
 # ---------------------------------------------------------------------------
 # Running
 
