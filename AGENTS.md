@@ -14,15 +14,16 @@ Never load every change or every capability. The index exists so you do not have
 
 ## How work moves
 
-- No design and no code before the change's `spec.md` has status `approved`.
-- Use the skills: `sdd-new` to start a change, `sdd-plan` after approval, `sdd-implement` one task at a time, `sdd-verify` to reach done, `sdd-archive` to close it. They are installed under `.agents/skills/` and `.claude/skills/` as links to `skills/`.
+- No design and no code before the change's `spec.md` has `status: approved`.
+- Use the skills: `sdd-new` to start a change, `sdd-plan` after approval, `sdd-implement` one task at a time, `sdd-verify` to reach done, `sdd-archive` to close it.
 - Work from `tasks.md`. Tick a task only when its requirement IDs are covered by code and tests.
 - Every commit that belongs to a change ends with a `Change: NNN` trailer. When the commit covers requirements, add `Requirements: REQ-NNN-xx, ...`. Pull request titles start with the change number.
-- Do not mark a change `done` or `archived` by hand. The checklist gates and the archive step do that.
-- If a task reveals that a requirement is wrong, stop and edit `requirements.md` in a reviewed change. Do not quietly implement something else.
+- Do not change a status by hand. The one exception is Gate 1, where the approver sets `status: approved`, `approved_by` and `approved_at`.
+- If a task contradicts a requirement, stop and report. Do not quietly implement something else.
 
-## Where things are
+## Where things are in this repository
 
-- Method reference: `docs/method.md`
-- Templates: `specs/templates/`
-- Skills: `skills/`, one directory per lifecycle step, installed into a project with `./install.sh <project-dir>`
+- Method reference: `docs/method.md`, also served on the site.
+- Templates: `specs/templates/`. The sections above come from `specs/templates/AGENTS.md`; keep them identical and change the template first.
+- Skills: `skills/`, one directory per lifecycle step, linked into `.agents/skills/` and `.claude/skills/` by `./install.sh . --link`.
+- Validator: `specs/validate.py`, run through the constitution's `validator` key; tests in `tests/`.
