@@ -60,16 +60,6 @@ You describe what you want. The agent asks what the description leaves open, wri
     counting from 1. Because the notes live in the file, they are still there after
     the terminal is closed and opened again.
 
-    ## Scope
-
-    ### In
-    - `notes add "some text"` appends one line containing the text to `notes.txt`.
-    - `notes list` prints every saved note, each with a number in front, from 1.
-    - Notes persist in `notes.txt` between terminal sessions.
-
-    ### Out
-    - Editing or deleting notes. Searching. Tags. Syncing between machines.
-
     ## Success criteria
 
     - After `notes add "some text"`, `notes.txt` has one more line, and it is `some text`.
@@ -77,7 +67,7 @@ You describe what you want. The agent asks what the description leaves open, wri
     - In a new terminal in the same directory, `notes list` still prints them.
     ```
 
-Read it as the person who asked for the tool. Why comes before what. Out says what a reader might assume. Every success criterion is something you could check by hand.
+Read it as the person who asked for the tool. Why comes before what, and every success criterion is something you could check by hand.
 
 ## Try to skip the approval
 

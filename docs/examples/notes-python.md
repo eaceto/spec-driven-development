@@ -44,5 +44,4 @@ Two languages, two agents' worth of decisions, the same shape: one capability, o
 
 ```
 python3 specs/validate.py --root examples/notes-python
-0 violations, 8 files, 21 rules; git checks skipped
 ```

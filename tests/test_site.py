@@ -158,6 +158,64 @@ class TestAuthoredPages(unittest.TestCase):
         self.assertIn("notes-python", (DOCS / "tutorial/06-verify-archive.md").read_text(encoding="utf-8"))
         self.assertTrue((DOCS / "examples/notes-python.md").is_file())
 
+    def test_home_first_screen_REQ_009_01(self):
+        home = (DOCS / "index.md").read_text(encoding="utf-8")
+        first_para = home.split("\n\n")[2]
+        self.assertIn("agent", first_para.lower())
+        self.assertIn("coding assistants", first_para)
+        button = home.index("{ .md-button")
+        self.assertLess(home.index("## Why adopt it"), button)
+        after = home[button:button + 600]
+        for word in ("git", "Python", "minutes"):
+            self.assertIn(word, after)
+
+    def test_glossary_and_single_devin_note_REQ_009_02(self):
+        overview = (DOCS / "tutorial/index.md").read_text(encoding="utf-8")
+        for term in ("**Change**", "**Capability**", "**Gate**", "**Tier**", "**Statuses**"):
+            self.assertIn(term, overview)
+        for page in (DOCS / "tutorial").glob("*.md"):
+            self.assertNotIn("being added", page.read_text(encoding="utf-8"), page.name)
+
+    def test_refusal_shown_on_step_3_REQ_009_03(self):
+        step = (DOCS / "tutorial/03-new.md").read_text(encoding="utf-8")
+        self.assertIn("## Try to skip the approval", step)
+        self.assertIn("Gate 1", step[step.index("## Try to skip the approval"):])
+        self.assertRegex(step[step.index("## Try to skip the approval"):], r"8 November 2026")
+
+    def test_no_product_comparisons_REQ_009_04(self):
+        import re as _re
+        pattern = _re.compile(r"spec-kit|\bkiro\b|openspec", _re.IGNORECASE)
+        for page in authored_pages() + [ROOT / "README.md"]:
+            self.assertIsNone(pattern.search(page.read_text(encoding="utf-8")), page)
+
+    def test_adoption_and_questions_pages_REQ_009_05(self):
+        for name in ("adopting.md", "questions.md"):
+            page = DOCS / name
+            self.assertTrue(page.is_file())
+            self.assertLess(len(page.read_text(encoding="utf-8").split()), WORD_LIMIT)
+            self.assertIn(name, MKDOCS_YML)
+
+    def test_skill_pages_open_with_the_request_REQ_009_06(self):
+        page = HOOK.render_skill("sdd-new", (ROOT / "skills/sdd-new/SKILL.md").read_text(encoding="utf-8"))
+        self.assertLess(page.index("Say to your agent"), page.index("## When to use"))
+
+    def test_rule_ids_link_to_capabilities_REQ_009_07(self):
+        where = HOOK.capability_of_requirements()
+        self.assertEqual("spec-layout", where.get("REQ-001-02"))
+        page = HOOK.render_rules(HOOK.load_rules(), where)
+        self.assertIn("[REQ-001-02](https://github.com/eaceto/spec-driven-development/blob/main/specs/capabilities/spec-layout/spec.md)", page)
+
+    def test_example_pages_carry_no_counts_REQ_009_08(self):
+        import re as _re
+        for name in ("greenfield-go.md", "notes-python.md"):
+            text = (DOCS / "examples" / name).read_text(encoding="utf-8")
+            self.assertIsNone(_re.search(r"\d+ violations, \d+ files, \d+ rules", text), name)
+
+    def test_logo_and_favicon_REQ_009_09(self):
+        self.assertIn("logo: material/", MKDOCS_YML)
+        self.assertIn("favicon: assets/favicon.svg", MKDOCS_YML)
+        self.assertTrue((DOCS / "assets/favicon.svg").is_file())
+
     def test_tutorial_steps_state_agent_and_date_REQ_004_04(self):
         steps = sorted((DOCS / "tutorial").glob("0*.md"))
         self.assertTrue(steps)
