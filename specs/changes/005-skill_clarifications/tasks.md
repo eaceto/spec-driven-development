@@ -9,4 +9,4 @@
 
 ## Verification
 
-- [ ] T05 Every skill still under 150 lines, five sections in order, vendor-neutral; validator and tests green [REQ-002-01, REQ-002-02, REQ-002-03]
+- [x] T05 Every skill still under 150 lines, five sections in order, vendor-neutral; validator and tests green [REQ-002-01, REQ-002-02, REQ-002-03]
