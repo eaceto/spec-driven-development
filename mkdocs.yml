@@ -60,6 +60,7 @@ nav:
       - 2. Set up the project: tutorial/02-init.md
       - 3. Start a change: tutorial/03-new.md
       - 4. Plan it: tutorial/04-plan.md
+      - 5. Implement a task: tutorial/05-implement.md
   - For developers: for-developers.md
   - For team leads: for-team-leads.md
   - Agents: agents.md

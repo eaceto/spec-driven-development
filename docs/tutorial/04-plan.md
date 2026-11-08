@@ -85,4 +85,4 @@ git add specs && git commit -m "Plan change 001: requirements, design and tasks
 Change: 001"
 ```
 
-Next: 5. Implement a task.
+Next: [5. Implement a task](05-implement.md).
