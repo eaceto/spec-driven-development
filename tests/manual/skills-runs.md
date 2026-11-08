@@ -22,6 +22,11 @@ Behavioural requirements of the skills are tested by running the skills in real 
 | REQ-002-17 | Archive refuses on in-progress and on capability mismatch | Claude Code | 2026-11-08 | Negative path run on another project; mismatch refusal exercised by the validator rule status-archived in tests/test_validate.py | Owner-reported, pass |
 | REQ-002-18 | Index rows updated by new, plan, verify, archive | Claude Code | 2026-11-08 | /tmp/sdd-trial index shows the archived state and the greeting capability | Observed, pass |
 | REQ-002-19 | Skills behave the same with and without a validator | Claude Code | 2026-11-08 | Trial ran without a validator and produced files the validator later accepts with zero violations; this repository runs with the key set | Observed, pass |
+| REQ-002-06 | Plan on a draft refuses and names Gate 1 | Claude Code | 2026-11-08 | Fresh run on a copy of the notes project; sdd-new wrote a draft, sdd-plan refused: "status: draft; needs Gate 1"; no files changed | Observed, pass |
+| REQ-002-17 | Archive on in-progress refuses and points to sdd-verify | Claude Code | 2026-11-08 | Fresh run; refused on status before any other check; no files changed | Observed, pass |
+| REQ-002-08 | Init on an existing codebase | Claude Code | 2026-11-08 | Fresh run with specs/ removed: detected an existing project, three principles each quoting a README sentence, one capability with purpose only and zero requirements, AGENTS.md written. Ran the 0.1.0 skill, so no .gitkeep files; the 0.1.1 text adds them | Observed, pass except .gitkeep (skill version) |
+| REQ-002-12 | Plan on a quick change implying behaviour change asks to raise the tier | Claude Code | 2026-11-08 | Fresh run; stopped at the tier check, asked for standard, wrote nothing | Observed, pass |
+| REQ-002-14 | Implement stops when a cited requirement does not exist | Claude Code | 2026-11-08 | Fresh run; task cited REQ-002-01, undefined; stopped at the pre-write check, no code, no commit, named the gap | Observed, pass |
 
 Open observations from the runs, each a candidate improvement rather than a failure:
 
@@ -29,3 +34,7 @@ Open observations from the runs, each a candidate improvement rather than a fail
 - The trial's index linked the capability id rather than the title; fixed in the skills on 2026-11-08.
 - `sdd-archive` describes the merge for changes with a `requirements.md`. A quick change has none; its listed capabilities should still receive a History line. Done by hand for change 005 on 2026-11-08; a later quick change should say so in the skill.
 - Tutorial transcripts for Devin CLI: not captured, no Devin session was available on 2026-11-08. The Devin tabs say so. REQ-004-04 was amended to require Claude Code transcripts and a pending note for Devin. Open until someone runs the six steps on Devin and sends the transcripts.
+- `sdd-plan` asks the author to raise a quick change's tier but does not say whether the approver re-confirms. It should: the tier is part of what was approved.
+- `sdd-implement`'s refuse-when says "cites no requirement id"; a task citing an id that does not exist is caught by the pre-write check instead. One phrase would cover both.
+- `sdd-init` refuses when `specs/` exists, including an empty leftover directory. It could say "exists and is not empty".
+- Observed on 2026-11-08 in the refusal-path runs; all three are text clarifications for a later quick change.
