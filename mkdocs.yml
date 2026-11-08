@@ -65,7 +65,9 @@ nav:
   - For developers: for-developers.md
   - For team leads: for-team-leads.md
   - Agents: agents.md
-  - Example, a Go project: examples/greenfield-go.md
+  - Examples:
+      - A Go project: examples/greenfield-go.md
+      - The tutorial's notes tool: examples/notes-python.md
   - Reference:
       - The method: method.md
       - Skills:

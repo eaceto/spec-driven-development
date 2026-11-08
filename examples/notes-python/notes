@@ -1,0 +1,87 @@
+#!/usr/bin/env python3
+"""notes: keep short notes in notes.txt in the current directory.
+
+Change 001. One subcommand per function; main() dispatches on the first
+argument and prints usage to stderr with exit status 2 when the subcommand
+is missing or unknown (design.md, "Unknown or missing subcommand prints
+usage and exits 2").
+"""
+
+import os
+import sys
+
+# REQ-001-03: nothing is kept between runs. There is no module-level state
+# beyond these constants; every invocation opens notes.txt afresh, which is
+# what makes notes survive closing the terminal.
+
+USAGE = "usage: notes add <text> | notes list"
+NOTES_FILE = "notes.txt"
+
+
+def cmd_add(args):
+    """REQ-001-01: append one line containing exactly the text to notes.txt.
+
+    The arguments after `add` are joined with single spaces. Text that is
+    empty or contains a newline cannot be one line, so it is refused: an
+    error goes to stderr, nothing is written, and the exit status is 1.
+    If an existing file does not end with a newline, one is written first
+    so the new note never glues onto the previous line.
+    """
+    text = " ".join(args)
+    if not text or "\n" in text:
+        print("notes: a note must be one non-empty line of text", file=sys.stderr)
+        return 1
+
+    needs_newline = False
+    try:
+        with open(NOTES_FILE, "rb") as f:
+            f.seek(0, os.SEEK_END)
+            if f.tell() > 0:
+                f.seek(-1, os.SEEK_END)
+                needs_newline = f.read(1) != b"\n"
+    except FileNotFoundError:
+        pass
+
+    with open(NOTES_FILE, "a", encoding="utf-8") as f:
+        if needs_newline:
+            f.write("\n")
+        f.write(text + "\n")
+    return 0
+
+
+def cmd_list(args):
+    """REQ-001-02: print every line of notes.txt as `N. text`, N from 1.
+
+    The file is read afresh from the current directory on every run. A
+    missing or empty file prints nothing and exits 0. The file is decoded
+    as UTF-8 with errors="replace" so a hand-edited file with stray bytes
+    still lists every line (design.md, Risks).
+    """
+    try:
+        with open(NOTES_FILE, encoding="utf-8", errors="replace") as f:
+            lines = f.read().splitlines()
+    except FileNotFoundError:
+        return 0
+    for number, text in enumerate(lines, start=1):
+        print(f"{number}. {text}")
+    return 0
+
+
+# Subcommand name -> function taking the remaining arguments and returning
+# an exit status. Each implementation task registers its own entry here.
+COMMANDS = {
+    "add": cmd_add,
+    "list": cmd_list,
+}
+
+
+def main(argv=None):
+    args = sys.argv[1:] if argv is None else argv
+    if not args or args[0] not in COMMANDS:
+        print(USAGE, file=sys.stderr)
+        return 2
+    return COMMANDS[args[0]](args[1:])
+
+
+if __name__ == "__main__":
+    sys.exit(main())

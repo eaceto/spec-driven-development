@@ -2,7 +2,7 @@
 
 ## Implementation
 
-- [ ] T01 Copy the tutorial project to `examples/notes-python` without the installed skills; narrative page; tutorial step 6 links to it [REQ-007-01]
+- [x] T01 Copy the tutorial project to `examples/notes-python` without the installed skills; narrative page; tutorial step 6 links to it [REQ-007-01]
 - [ ] T02 Remove `metadata.version` from the six skills, the validator's skills rule, the hook, the skills README and the tests [REQ-002-01, REQ-003-17]
 - [ ] T03 Coverage search ignores comment-only lines; test with an id only in a comment [REQ-003-13]
 - [ ] T04 Frontmatter parser reports block-style lists; test [REQ-007-02]

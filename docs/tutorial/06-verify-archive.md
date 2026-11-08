@@ -73,4 +73,6 @@ python3 specs/validate.py --root .
 0 violations, 7 files, 21 rules
 ```
 
+The finished project is in the repository as [`examples/notes-python`](../examples/notes-python.md), exactly as these sessions left it.
+
 You have done the method once. Now read [what every rule you followed is for](../method.md).
