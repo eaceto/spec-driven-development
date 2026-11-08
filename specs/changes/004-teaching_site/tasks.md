@@ -14,7 +14,7 @@
 - [x] T07 Entry pages for developers and team leads [REQ-004-05]
 - [ ] T08 Tutorial, six steps, with Claude Code transcripts from fresh runs [REQ-004-04]
 - [ ] T09 Devin CLI transcripts added to the tutorial tabs, from the owner's runs [REQ-004-04]
-- [ ] T10 `tests/test_site.py`: configuration, hook output, word limits, UK spelling [REQ-004-06, REQ-004-09, REQ-004-10, REQ-004-11, REQ-004-12]
+- [x] T10 `tests/test_site.py`: configuration, hook output, word limits, UK spelling [REQ-004-06, REQ-004-09, REQ-004-10, REQ-004-11, REQ-004-12]
 - [ ] T11 README links to the site; method document mentions where the site lives [REQ-004-03]
 
 ## Verification

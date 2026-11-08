@@ -12,6 +12,7 @@
 ## Gate 2: done
 
 - [ ] Every success criterion in spec.md is met
+  - Evidence, 2026-11-08 (build fails on a broken link): with the tutorial overview linking to five pages not yet written, `mkdocs build --strict` aborted with six warnings and produced no site. Covers REQ-004-01's broken-link scenario.
 - [ ] Every task in tasks.md is ticked
 - [ ] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
 - [ ] No open questions remain in design.md
