@@ -128,6 +128,7 @@ Its frontmatter is the only configuration the method has:
 | `extends` | The organisation constitution and version this project builds on, or `none` |
 | `numbering` | `sequential` or the `ticket` variant |
 | `sdd_version` | The version of templates and skills the project pins |
+| `validator` | Optional. The command skills run to check the specs. Set when the validator is installed |
 
 A project constitution may add rules to the one it extends. It may never relax one.
 
@@ -167,7 +168,17 @@ Do not specify the whole codebase. Maintainers of every existing tool say the sa
 
 Skills live in `skills/<name>/SKILL.md` in the open Agent Skills format. Installing them into a project links that folder into `.agents/skills/`, read by Devin and Codex among others, and `.claude/skills/`, read by Claude Code. The repository root carries `AGENTS.md` with the loading rule and lifecycle rules. `CLAUDE.md` points to it.
 
-The planned skills map to the lifecycle: init, adopt, new, clarify, design, tasks, implement, verify, archive, index.
+The six skills map to the lifecycle: `sdd-init`, `sdd-new`, `sdd-plan`, `sdd-implement`, `sdd-verify`, `sdd-archive`. Each is a procedure a person can follow by hand, with the same five sections: when to use, preconditions, steps, refuse when, done when. Skills read templates from the project's `specs/templates/`, and `sdd-init` carries a bundled copy so it can create that folder.
+
+### Installing the skills
+
+From a checkout of this repository:
+
+```
+./install.sh /path/to/your-project
+```
+
+The script copies the six skills into `.agents/skills/` and `.claude/skills/` of the project, bundles the templates into `sdd-init`, writes the version into `sdd_version` in the project's constitution if one exists, and creates a `CLAUDE.md` pointing to `AGENTS.md` if the project has none. Then, in your agent, run `sdd-init`. To upgrade, run the script again from a newer checkout; the version in the constitution shows what a project is on. For working on the skills themselves, `./install.sh . --link` symlinks instead of copying.
 
 ## What we took from existing tools
 
