@@ -226,7 +226,8 @@ class Project:
         return {rid: cap for cap in self.capabilities for rid in cap.retired_ids}
 
     def test_corpus(self) -> str:
-        """Text of every file outside specs/ whose path contains 'test'. REQ-001-20 counts a requirement as tested when its id appears here."""
+        """Text of every file outside specs/ whose path contains 'test', with underscores read as hyphens so that
+        a test named test_REQ_014_03 counts for REQ-014-03. REQ-001-20 counts a requirement as tested when its id appears here."""
         if self._corpus is None:
             parts: List[str] = []
             for p in sorted(self.root.rglob("*")):
@@ -238,7 +239,7 @@ class Project:
                         parts.append(p.read_text(encoding="utf-8", errors="ignore"))
                     except OSError:
                         continue
-            self._corpus = "\n".join(parts)
+            self._corpus = "\n".join(parts).replace("_", "-")
         return self._corpus
 
     # Git helpers, best effort: None when git or the repository is unavailable.
