@@ -1,6 +1,6 @@
 # Example: a greenfield Go project
 
-The folder [`examples/greenfield-go`](https://github.com/eaceto/spec-driven-development/tree/main/examples/greenfield-go) is a real run of the method, kept exactly as the skills produced it on 8 November 2026 with Claude Code. Nothing in it was tidied afterwards. It took thirty minutes from an empty folder to an archived capability, including a Go module and its tests.
+The folder [`examples/greenfield-go`](https://github.com/eaceto/spec-driven-development/tree/main/examples/greenfield-go) is a real run of the method, kept exactly as the skills produced it on 8 November 2026 with Claude Code. Nothing in it was tidied afterwards, so its `specs/templates/` folder is a snapshot of the templates as they were that day; the current ones are in [`specs/templates`](https://github.com/eaceto/spec-driven-development/tree/main/specs/templates) at the repository root. It took thirty minutes from an empty folder to an archived capability, including a Go module and its tests.
 
 ## What happened, in order
 
