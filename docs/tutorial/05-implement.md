@@ -45,7 +45,7 @@ Then, when it stops:
 
 === "Devin CLI"
 
-    The same two requests. A transcript from the owner's Devin run is being added.
+    Same request. Devin reads `.agents/skills/` and `AGENTS.md` natively, so the words and the files are the same.
 
 ## What the history looks like
 

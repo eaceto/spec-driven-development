@@ -38,47 +38,56 @@ You describe what you want. The agent asks what the description leaves open, wri
 
 === "Devin CLI"
 
-    The same request and the same five questions. A transcript from the owner's Devin run is being added.
+    Same request. Devin reads `.agents/skills/` and `AGENTS.md` natively, so the words and the files are the same.
 
-## The page it wrote
+??? note "The page it wrote"
+    ```markdown
+    # 001: Add and list notes from the terminal
 
-```markdown
-# 001: Add and list notes from the terminal
+    ## Why it matters
 
-## Why it matters
+    Small notes get lost. Today they end up in chat windows and on sticky notes,
+    with no single place to look for them later. An idea, a reminder or a reference
+    written down in passing cannot be found when it is needed, and has to be
+    remembered or rewritten. If nothing is done, there is still no one place in the
+    terminal to keep such notes and trust that they stay.
 
-Small notes get lost. Today they end up in chat windows and on sticky notes,
-with no single place to look for them later. An idea, a reminder or a reference
-written down in passing cannot be found when it is needed, and has to be
-remembered or rewritten. If nothing is done, there is still no one place in the
-terminal to keep such notes and trust that they stay.
+    ## What should be done
 
-## What should be done
+    A command-line tool called `notes` keeps short notes in a plain text file,
+    `notes.txt`, in the current directory. `notes add "some text"` saves the text as
+    a new note. `notes list` prints every saved note with a number in front,
+    counting from 1. Because the notes live in the file, they are still there after
+    the terminal is closed and opened again.
 
-A command-line tool called `notes` keeps short notes in a plain text file,
-`notes.txt`, in the current directory. `notes add "some text"` saves the text as
-a new note. `notes list` prints every saved note with a number in front,
-counting from 1. Because the notes live in the file, they are still there after
-the terminal is closed and opened again.
+    ## Scope
 
-## Scope
+    ### In
+    - `notes add "some text"` appends one line containing the text to `notes.txt`.
+    - `notes list` prints every saved note, each with a number in front, from 1.
+    - Notes persist in `notes.txt` between terminal sessions.
 
-### In
-- `notes add "some text"` appends one line containing the text to `notes.txt`.
-- `notes list` prints every saved note, each with a number in front, from 1.
-- Notes persist in `notes.txt` between terminal sessions.
+    ### Out
+    - Editing or deleting notes. Searching. Tags. Syncing between machines.
 
-### Out
-- Editing or deleting notes. Searching. Tags. Syncing between machines.
+    ## Success criteria
 
-## Success criteria
-
-- After `notes add "some text"`, `notes.txt` has one more line, and it is `some text`.
-- `notes list` prints each note on its own line, numbered from 1.
-- In a new terminal in the same directory, `notes list` still prints them.
-```
+    - After `notes add "some text"`, `notes.txt` has one more line, and it is `some text`.
+    - `notes list` prints each note on its own line, numbered from 1.
+    - In a new terminal in the same directory, `notes list` still prints them.
+    ```
 
 Read it as the person who asked for the tool. Why comes before what. Out says what a reader might assume. Every success criterion is something you could check by hand.
+
+## Try to skip the approval
+
+Before approving, ask the agent to plan the change. This is what happened when we did, in a fresh session on 8 November 2026:
+
+> **You:** Plan change 001.
+>
+> **Agent:** Change 001 has `status: draft`, with `approved_by` and `approved_at` empty. It needs Gate 1 before planning: the owner of the `notes` capability reviews `spec.md` and sets `status: approved`, `approved_by` and `approved_at`. I have stopped and written nothing.
+
+That refusal is the method working. No design and no code exist until a person has agreed on the purpose.
 
 ## Your two steps
 

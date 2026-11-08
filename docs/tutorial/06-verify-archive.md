@@ -31,7 +31,7 @@ Then:
 
 === "Devin CLI"
 
-    The same request. A transcript from the owner's Devin run is being added.
+    Same request. Devin reads `.agents/skills/` and `AGENTS.md` natively, so the words and the files are the same.
 
 Had one item failed, nothing would have changed and the report would say what makes it pass. The gate is the point.
 
@@ -51,7 +51,7 @@ Had one item failed, nothing would have changed and the report would say what ma
 
 === "Devin CLI"
 
-    The same request. A transcript from the owner's Devin run is being added.
+    Same request. Devin reads `.agents/skills/` and `AGENTS.md` natively, so the words and the files are the same.
 
 ## What you have now
 

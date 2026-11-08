@@ -30,42 +30,41 @@ Now that the one page is approved, the agent turns it into requirements with sce
 
 === "Devin CLI"
 
-    The same request. A transcript from the owner's Devin run is being added.
+    Same request. Devin reads `.agents/skills/` and `AGENTS.md` natively, so the words and the files are the same.
 
-## What it wrote
+??? note "What it wrote: one requirement and the task list"
+    One of the three requirements, as written:
 
-One of the three requirements, as written:
+    ```markdown
+    ### REQ-001-01: Add a note
+    When `notes add <text>` is run, the `notes` command SHALL append one line
+    containing exactly the text to `notes.txt` in the current directory, creating
+    the file if it does not exist.
 
-```markdown
-### REQ-001-01: Add a note
-When `notes add <text>` is run, the `notes` command SHALL append one line
-containing exactly the text to `notes.txt` in the current directory, creating
-the file if it does not exist.
+    #### Scenario: Append to existing notes
+    - GIVEN `notes.txt` in the current directory holds two lines
+    - WHEN `notes add "Buy milk"` is run
+    - THEN `notes.txt` holds three lines, the last line is `Buy milk`, and the exit status is 0
 
-#### Scenario: Append to existing notes
-- GIVEN `notes.txt` in the current directory holds two lines
-- WHEN `notes add "Buy milk"` is run
-- THEN `notes.txt` holds three lines, the last line is `Buy milk`, and the exit status is 0
+    #### Scenario: Text that would span more than one line is refused
+    - GIVEN `notes.txt` in the current directory holds two lines
+    - WHEN `notes add` is run with text that contains a newline character
+    - THEN `notes.txt` still holds the same two lines, an error is printed to stderr, and the exit status is not 0
+    ```
 
-#### Scenario: Text that would span more than one line is refused
-- GIVEN `notes.txt` in the current directory holds two lines
-- WHEN `notes add` is run with text that contains a newline character
-- THEN `notes.txt` still holds the same two lines, an error is printed to stderr, and the exit status is not 0
-```
+    The tasks, abridged:
 
-The tasks, abridged:
+    ```markdown
+    - [ ] T01 Create the `notes` script, a `main()` that dispatches on the first argument,
+          and a test helper that runs the script in a temporary directory. [setup]
+    - [ ] T02 Implement `notes add <text...>` … [REQ-001-01]
+    - [ ] T03 Implement `notes list` … [REQ-001-02]
+    - [ ] T04 Make persistence hold across runs … [REQ-001-03]
+    - [ ] T05 Tests exist for every requirement ID; `python3 -m unittest` passes [all]
+    - [ ] T06 README shows how to run `notes add`, `notes list` and the tests [all]
+    ```
 
-```markdown
-- [ ] T01 Create the `notes` script, a `main()` that dispatches on the first argument,
-      and a test helper that runs the script in a temporary directory. [setup]
-- [ ] T02 Implement `notes add <text...>` … [REQ-001-01]
-- [ ] T03 Implement `notes list` … [REQ-001-02]
-- [ ] T04 Make persistence hold across runs … [REQ-001-03]
-- [ ] T05 Tests exist for every requirement ID; `python3 -m unittest` passes [all]
-- [ ] T06 README shows how to run `notes add`, `notes list` and the tests [all]
-```
-
-Every task cites the requirement ids it satisfies. That is what later lets a commit, a test and a requirement be matched without anyone remembering.
+    Every task cites the requirement ids it satisfies. That is what later lets a commit, a test and a requirement be matched without anyone remembering.
 
 ## What to read, and why
 

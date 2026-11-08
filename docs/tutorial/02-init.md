@@ -50,7 +50,10 @@ One request. The agent asks a few questions, writes a one-page constitution, and
 
 === "Devin CLI"
 
-    The same request. Devin reads `.agents/skills/` and `AGENTS.md` on its own, so no slash command is needed. The questions and the files are the same as in the Claude Code tab. A transcript from the owner's Devin run is being added.
+    Same request. Devin reads `.agents/skills/` and `AGENTS.md` natively, so the questions and the files are the same.
+
+!!! note "About \"I checked by reading\""
+    These transcripts were captured before the validator was installed, so the agent checked the files by reading them. Run `install.sh .` once more after this step, as step 1 says, and from then on the agent runs `python3 specs/validate.py` instead and quotes its result.
 
 ## What you now have
 
