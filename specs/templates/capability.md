@@ -14,26 +14,29 @@ updated: YYYY-MM-DD           # set by the archive step
 ## Requirements
 
 <!-- Only the archive step writes here. Requirements keep the ID they were born with.
-     "Origin" is the change that introduced the requirement. "Changed in" lists later changes that modified it. -->
+     Each block looks like this, with "Origin" naming the change that introduced it and
+     "Changed in" listing later changes that modified it:
 
-### REQ-NNN-01: Title
-Origin: NNN
+     ### REQ-NNN-01: Title
+     Origin: NNN
+     Changed in: MMM
 
-When <trigger>, the <subject> SHALL <behaviour>.
+     When <trigger>, the <subject> SHALL <behaviour>.
 
-#### Scenario: Name
-- GIVEN <precondition>
-- WHEN <action>
-- THEN <observable result>
+     #### Scenario: Name
+     - GIVEN <precondition>
+     - WHEN <action>
+     - THEN <observable result>
+-->
 
 ## Retired
 
-<!-- IDs are never reused. A removed requirement is listed here with the change that removed it and why. -->
-
-- REQ-NNN-02, removed by change MMM: reason.
+<!-- IDs are never reused. One line per removed requirement:
+     - REQ-NNN-02, removed by change MMM: reason.
+-->
 
 ## History
 
-<!-- One line per archived change that touched this capability. -->
-
-- NNN (YYYY-MM-DD): change title
+<!-- One line per archived change that touched this capability:
+     - NNN (YYYY-MM-DD): change title
+-->
