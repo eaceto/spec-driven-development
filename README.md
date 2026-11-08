@@ -43,6 +43,7 @@ specs/
 
 ## Start here
 
+- [The site](https://eaceto.github.io/spec-driven-development/): what the method is, a first change in fifteen minutes, and the reference. Start there if you are new.
 - [The method](docs/method.md): the complete reference in one page per topic.
 - [The constitution of this repository](specs/constitution.md): the rules this repo follows, which double as an example.
 - [Change 001](specs/changes/001-spec_layout_and_lifecycle/spec.md): this repository specifies itself. The first change defines the layout and lifecycle you are reading about.
@@ -50,7 +51,7 @@ specs/
 
 ## Status
 
-Early. The structure, templates and first change exist. Skills, role guides and the validator are the next changes.
+The method, six skills, the validator and the templates are complete and the repository practises them on itself. The teaching site is being assembled; see change 004 in `specs/`.
 
 ## License
 
