@@ -108,4 +108,4 @@ git add -A && git commit -m "Adopt spec-driven development"
 !!! note "Two things this run taught us"
     Git does not keep empty folders, so a fresh clone would lack `capabilities/`, `changes/` and `archive/` until something lands in them. The skill is being updated to leave a `.gitkeep` in each. And the agent created files before asking its questions; the order is being reversed so you are asked first. Both are recorded as a quick change in the repository, which is how the method fixes itself.
 
-Next: 3. Start a change.
+Next: [3. Start a change](03-new.md).
