@@ -175,10 +175,10 @@ The validator SHALL report a violation when a capability spec is not at `specs/c
 
 ### REQ-003-13: Status consistency rule
 Origin: 003
-Changed in: 007
+Changed in: 007, 008
 
 
-The validator SHALL report a violation when a draft change contains any file other than `spec.md`; when a done change has an unticked task, an unticked Gate 2 item, or a requirement id that appears in no test file outside comment lines and is not listed under Not testable; when an archived change is under `specs/changes/`, a change under `specs/archive/` is not archived, or an archived change has an added requirement absent from its capability spec, a modified one without `Changed in`, a removed one not under Retired, or an unticked Gate 3 item; and, when the project is a git repository, when a status has moved backwards relative to the committed version.
+The validator SHALL report a violation when a draft change contains any file other than `spec.md`; when a done change has an unticked task, an unticked Gate 2 item, or a requirement id that appears in no test file outside comment lines and is not exempted by its own bullet with a reason under Not testable; when an archived change is under `specs/changes/`, a change under `specs/archive/` is not archived, or an archived change has an added requirement absent from its capability spec, a modified one without `Changed in`, a removed one not under Retired, or an unticked Gate 3 item; and, when the project is a git repository, when a status has moved backwards relative to the committed version.
 
 #### Scenario: Draft with design
 - GIVEN a draft change containing `design.md`
@@ -302,8 +302,24 @@ When the constitution says `numbering: ticket`, the validator SHALL accept chang
 - WHEN the validator runs
 - THEN a violation cites REQ-001-02
 
+### REQ-008-01: Exemptions are explicit
+Origin: 008
+
+The validator SHALL treat a requirement id as exempt from coverage only when it appears under Not testable as the start of its own bullet followed by a reason, and SHALL report a violation for any other requirement id mentioned in that section, naming the bullet form.
+
+#### Scenario: Id in prose
+- GIVEN a Not testable section reading "REQ-014-03 is hard to test"
+- WHEN the validator runs
+- THEN a violation names REQ-014-03 and the form `- REQ-014-03: reason`, and REQ-014-03 is not exempt
+
+#### Scenario: Proper bullet
+- GIVEN a Not testable section containing `- REQ-014-03: needs a person to judge readability`
+- WHEN the validator runs
+- THEN REQ-014-03 is exempt and no violation is reported for it
+
 ## Retired
 
 ## History
 - 003 (2026-11-08): Spec validator
 - 007 (2026-11-08): Fixes from the 0.2.0 review
+- 008 (2026-11-08): Explicit exemptions and refusal wording

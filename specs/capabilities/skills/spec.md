@@ -215,6 +215,16 @@ When a validator is installed in the project, every skill SHALL run it before re
 - WHEN `sdd-plan` completes
 - THEN it has checked file presence per tier and requirement grouping by reading the files, and reports that no validator was found
 
+### REQ-008-02: Refusal wording from the runs
+Origin: 008
+
+The skills SHALL state that raising a quick change's tier is confirmed by the approver before planning continues, that `sdd-implement` refuses a task citing a requirement id that does not exist, and that `sdd-init` refuses only when `specs/` exists and is not empty.
+
+#### Scenario: Reading the skills
+- GIVEN the three skill files
+- WHEN a reader searches for those three situations
+- THEN each has one sentence that decides it
+
 ## Retired
 
 ## History
@@ -222,3 +232,4 @@ When a validator is installed in the project, every skill SHALL run it before re
 - 005 (2026-11-08): Skill clarifications from the first tutorial run
 - 006 (2026-11-08): Clarifications from the 0.2.0 review
 - 007 (2026-11-08): Fixes from the 0.2.0 review
+- 008 (2026-11-08): Explicit exemptions and refusal wording
