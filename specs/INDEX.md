@@ -6,6 +6,7 @@ Maintained by the skills. `sdd-new`, `sdd-plan`, `sdd-verify` and `sdd-archive` 
 
 | # | Title | Status | Tier | Owner | Ticket | Capabilities | Updated |
 |---|---|---|---|---|---|---|---|
+| 008 | [Explicit exemptions and refusal wording](changes/008-explicit_exemptions/spec.md) | in-progress | standard | maintainers | | validator, skills | 2026-11-08 |
 
 ## Capabilities
 
