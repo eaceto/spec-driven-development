@@ -53,6 +53,14 @@ hooks:
 
 nav:
   - Home: index.md
+  - What it is, and why: what-and-why.md
+  - Your first change:
+      - Overview: tutorial/index.md
+      - 1. Install the skills: tutorial/01-install.md
+  - For developers: for-developers.md
+  - For team leads: for-team-leads.md
+  - Agents: agents.md
+  - Example, a Go project: examples/greenfield-go.md
   - Reference:
       - The method: method.md
       - Skills:
@@ -64,4 +72,5 @@ nav:
           - sdd-verify: skills/sdd-verify.md
           - sdd-archive: skills/sdd-archive.md
       - Templates: reference/templates.md
+      - The validator: reference/validator.md
       - Validator rules: reference/validator-rules.md
