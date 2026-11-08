@@ -11,7 +11,7 @@
 - [x] T04 `examples/greenfield-go` from the trial, validator-clean, and its narrative page [REQ-004-08]
 - [x] T05 Home page and the what-and-why page [REQ-004-03, REQ-004-11]
 - [x] T06 Agents page [REQ-004-07]
-- [ ] T07 Entry pages for developers and team leads [REQ-004-05]
+- [x] T07 Entry pages for developers and team leads [REQ-004-05]
 - [ ] T08 Tutorial, six steps, with Claude Code transcripts from fresh runs [REQ-004-04]
 - [ ] T09 Devin CLI transcripts added to the tutorial tabs, from the owner's runs [REQ-004-04]
 - [ ] T10 `tests/test_site.py`: configuration, hook output, word limits, UK spelling [REQ-004-06, REQ-004-09, REQ-004-10, REQ-004-11, REQ-004-12]
