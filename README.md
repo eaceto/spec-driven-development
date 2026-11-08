@@ -51,3 +51,7 @@ specs/
 ## Status
 
 Early. The structure, templates and first change exist. Skills, role guides and the validator are the next changes.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
