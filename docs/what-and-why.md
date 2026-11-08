@@ -41,7 +41,7 @@ stateDiagram-v2
 
 ## Where it came from
 
-GitHub's spec-kit, Amazon's Kiro and OpenSpec all split a spec into what, how and tasks, and each got something right. This method takes the numbered directories from spec-kit, the small file set and requirement traceability from Kiro, and the living-spec merge from OpenSpec. It adds what none of them has: a lifecycle with gates, tiers that scale ceremony down, capability ownership, an index so nobody loads everything, and a validator.
+The method was shaped by studying how teams use today's spec-driven tools and where they stop using them. It keeps what worked, numbered changes, a small file set, requirements that tests can cite, living specs, and adds the lifecycle, the tiers, ownership, the index and the validator that the stopping points called for. It is practised on its own repository: every rule on this site went through the process it describes.
 
 ## Read next
 

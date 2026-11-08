@@ -196,10 +196,6 @@ From a checkout of this repository:
 
 The script copies the six skills into `.agents/skills/` and `.claude/skills/` of the project, bundles the templates into `sdd-init`, writes the version into `sdd_version` in the project's constitution if one exists, and creates a `CLAUDE.md` pointing to `AGENTS.md` if the project has none. Then, in your agent, run `sdd-init`. To upgrade, run the script again from a newer checkout; the version in the constitution shows what a project is on. For working on the skills themselves, `./install.sh . --link` symlinks instead of copying.
 
-## What we took from existing tools
+## Where the method came from
 
-| Tool | Took | Left behind |
-|---|---|---|
-| spec-kit | Numbered directories, the constitution, checklists that test the spec's wording | Nine files per feature, no archive, no index |
-| Kiro | Three-file minimum, task to requirement traceability, steering with inclusion rules | Vendor lock-in, no numbering, no status |
-| OpenSpec | Living capability specs merged from change deltas, purpose-first proposals | Optional archive that teams skip, no overview at scale |
+It was shaped by studying how teams use spec-driven tools and where they stop. The stopping points, stale specs, unreadable folders, ceremony that does not scale down and nobody knowing who approved what, are what the lifecycle, the tiers, ownership, the index and the validator answer.
