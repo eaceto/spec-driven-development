@@ -1,0 +1,26 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Validate the specs
+        run: python3 specs/validate.py
+      - name: Run the tests
+        run: python3 -m unittest discover tests
+      - name: Install the site build
+        run: pip install -r requirements-site.txt
+      - name: Build the site in strict mode
+        run: mkdocs build --strict
