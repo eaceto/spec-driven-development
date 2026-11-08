@@ -17,7 +17,6 @@ Where specs live and what they look like: the layout under `specs/`, how changes
 Origin: 001
 Changed in: 003
 
-
 When a project adopts the method, the project SHALL contain a top-level `specs/` directory holding `constitution.md`, `INDEX.md`, `templates/`, `capabilities/`, `changes/` and `archive/`, and optionally `validate.py`.
 
 #### Scenario: Fresh project
