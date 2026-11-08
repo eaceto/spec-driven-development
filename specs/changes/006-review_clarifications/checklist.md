@@ -11,12 +11,14 @@
 
 ## Gate 2: done
 
-- [ ] Every success criterion in spec.md is met
-- [ ] Every task in tasks.md is ticked
-- [ ] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
-- [ ] No open questions remain in design.md
-- [ ] Constitution principles that applied were checked, and none was violated
-- [ ] Documentation that users or operators rely on is updated
+- [x] Every success criterion in spec.md is met
+  - Evidence, 2026-11-08: skills 43 to 52 lines; validator, 47 tests and strict build green; each sentence sits on the page where its question arises.
+- [x] Every task in tasks.md is ticked
+- [x] Every requirement ID is referenced by at least one test, or listed under "Not testable" with a reason
+  - Quick tier: no requirements changed.
+- [x] No open questions remain in design.md
+- [x] Constitution principles that applied were checked, and none was violated
+- [x] Documentation that users or operators rely on is updated
 
 ## Gate 3: archived
 

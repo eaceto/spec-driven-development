@@ -8,4 +8,4 @@
 
 ## Verification
 
-- [ ] T04 Skills within limits; validator, tests and strict build green [REQ-002-01]
+- [x] T04 Skills within limits; validator, tests and strict build green [REQ-002-01]
