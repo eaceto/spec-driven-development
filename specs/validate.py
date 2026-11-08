@@ -52,8 +52,11 @@ VENDOR_PATHS = [".claude", ".devin", ".agents"]
 VENDOR_NAMES = re.compile(r"\b(claude|devin|cursor|copilot|codex|windsurf)\b", re.IGNORECASE)
 
 CHANGE_DIR_RE = re.compile(r"^(\d{3})-[a-z0-9]+(?:_[a-z0-9]+)*$")
-REQ_HEADING_RE = re.compile(r"^### (REQ-(\d{3})-(\d{2,})): (.+?)\s*$")
-REQ_ID_RE = re.compile(r"REQ-\d{3}-\d{2,}")
+TICKET_KEY = r"[A-Z][A-Z0-9]+-\d+"  # REQ-007-03: numbering: ticket uses the tracker key as the change id
+CHANGE_DIR_TICKET_RE = re.compile(r"^(" + TICKET_KEY + r")-[a-z0-9]+(?:_[a-z0-9]+)*$")
+CHANGE_ID = r"(?:\d{3}|" + TICKET_KEY + r")"
+REQ_HEADING_RE = re.compile(r"^### (REQ-(" + CHANGE_ID + r")-(\d{2,})): (.+?)\s*$")
+REQ_ID_RE = re.compile(r"REQ-" + CHANGE_ID + r"-\d{2,}")
 SCENARIO_RE = re.compile(r"^#### Scenario: .+")
 BULLET_RE = re.compile(r"^- (GIVEN|WHEN|THEN|AND)\b")
 H2_RE = re.compile(r"^## (.+?)\s*$")
@@ -62,9 +65,9 @@ DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 TASK_RE = re.compile(r"^- \[([ xX])\] (T\d+)\b")
 CHECK_RE = re.compile(r"^- \[([ xX])\] ")
 GATE_RE = re.compile(r"^## Gate (\d)\b")
-TRAILER_RE = re.compile(r"^Change: (\d{3})\s*$", re.MULTILINE)
+TRAILER_RE = re.compile(r"^Change: (" + CHANGE_ID + r")\s*$", re.MULTILINE)
 LINK_RE = re.compile(r"\[([^\]]*)\]\([^)]*\)")
-REFERENCE_RE = re.compile(r"^(?:(?P<repo>[A-Za-z0-9._-]+):)?(?P<change>\d{3})(?:/(?P<req>REQ-\d{2,}))?$")
+REFERENCE_RE = re.compile(r"^(?:(?P<repo>[a-z0-9._-]+):)?(?P<change>" + CHANGE_ID + r")(?:/(?P<req>REQ-\d{2,}))?$")
 
 
 # ---------------------------------------------------------------------------
@@ -214,6 +217,7 @@ class Project:
     capabilities: List[Capability] = field(default_factory=list)
     stray_entries: List[str] = field(default_factory=list)  # visible non-directories in changes/ or archive/
     git: bool = False
+    numbering: str = "sequential"
     files_read: int = 0
     _corpus: Optional[str] = None
 
@@ -377,7 +381,7 @@ def parse_checklist(text: str) -> Dict[int, List[bool]]:
 
 def load_change(project: Project, path: Path, location: str) -> Change:
     rel = f"specs/{location}/{path.name}"
-    m = CHANGE_DIR_RE.match(path.name)
+    m = CHANGE_DIR_RE.match(path.name) or (CHANGE_DIR_TICKET_RE.match(path.name) if project.numbering == "ticket" else None)
     files = {p.name for p in _visible(path)}
     fm: Dict[str, object] = {}
     fm_error: Optional[str] = None
@@ -425,6 +429,8 @@ def load_project(root: Path) -> Project:
     if text is not None:
         project.constitution_fm, body, project.constitution_error = parse_frontmatter(text)
         project.constitution_sections = [s[0] for s in _h2_sections(body.splitlines())]
+        if project.constitution_fm and str(project.constitution_fm.get("numbering", "")) == "ticket":
+            project.numbering = "ticket"
         project.constitution_lines = len(text.splitlines())
     project.index_text = _read(project, project.specs / "INDEX.md")
     for location in ("changes", "archive"):
@@ -485,11 +491,11 @@ def check_layout(project: Project) -> Iterator[Violation]:
         yield Violation(stray, "layout-entries", ["REQ-001-02"], "only change directories belong here")
 
 
-@rule("change-dirname", ["REQ-001-02"], "change directories are named NNN-name_of_change", "change")
+@rule("change-dirname", ["REQ-001-02", "REQ-007-03"], "change directories are named NNN-name_of_change, or KEY-123-name_of_change under numbering: ticket", "change")
 def check_change_dirname(project: Project, ch: Change) -> Iterator[Violation]:
     if ch.num is None:
-        yield Violation(ch.rel, "change-dirname", ["REQ-001-02"],
-                        "expected NNN-name_of_change: three digits, a dash, lowercase words joined by underscores")
+        form = "NNN-name_of_change or KEY-123-name_of_change" if project.numbering == "ticket" else "NNN-name_of_change: three digits, a dash, lowercase words joined by underscores"
+        yield Violation(ch.rel, "change-dirname", ["REQ-001-02", "REQ-007-03"], f"expected {form}")
 
 
 @rule("change-id", ["REQ-001-02", "REQ-001-07"], "the id in spec.md equals the directory prefix", "change")
@@ -876,7 +882,7 @@ def check_agents_file(project: Project) -> Iterator[Violation]:
 def check_commit_trailers(project: Project) -> Iterator[Violation]:
     if not project.git:
         return
-    pattern = re.compile(r"specs/(?:changes|archive)/(\d{3})-")
+    pattern = re.compile(r"specs/(?:changes|archive)/(" + CHANGE_ID + r")-")
     for sha, message, files in project.recent_commits():
         touched = {m.group(1) for f in files for m in [pattern.match(f)] if m}
         declared = set(TRAILER_RE.findall(message))
@@ -957,7 +963,7 @@ def validate(root: Path, change: Optional[str] = None) -> Tuple[List[Violation],
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser(prog="validate.py", description=__doc__.split("\n\n")[0])
-    parser.add_argument("change", nargs="?", help="three-digit change number to check alone")
+    parser.add_argument("change", nargs="?", help="change number, or tracker key, to check alone")
     parser.add_argument("--rules", action="store_true", help="list the rules and exit")
     parser.add_argument("--root", default=".", help="project root (default: current directory)")
     parser.add_argument("--version", action="version", version=VERSION)
@@ -969,8 +975,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         for r in RULES:
             print(f"{r.id:<24} {', '.join(r.reqs):<40} {r.description}")
         return 0
-    if args.change is not None and not re.fullmatch(r"\d{3}", args.change):
-        print(f"usage error: change must be three digits, got {args.change!r}", file=sys.stderr)
+    if args.change is not None and not re.fullmatch(CHANGE_ID, args.change):
+        print(f"usage error: change must be three digits or a tracker key like ABC-123, got {args.change!r}", file=sys.stderr)
         return 2
     violations, stats = validate(Path(args.root), args.change)
     if stats.get("missing_change"):

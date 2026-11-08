@@ -91,6 +91,10 @@ class Fixture:
     def cleanup(self):
         shutil.rmtree(self.root, ignore_errors=True)
 
+    def set_numbering(self, mode):
+        c = self.specs / "constitution.md"
+        c.write_text(re.sub(r"^numbering:.*$", f"numbering: {mode}", c.read_text(), count=1, flags=re.M))
+
     # -- changes --------------------------------------------------------
     def add_change(self, num="014", name="sample_change", status="in-progress", tier="standard",
                    caps=("auth",), location="changes", approved=None, extra_requirements=""):
@@ -297,6 +301,16 @@ class TestLayoutNamingTiers(ValidatorCase):
         spec.write_text(spec.read_text().replace('id: "014"', 'id: "015"'))
         self.assert_violation(self.run_validator(), "change-id", "REQ-001-02")
         self.assert_violation(self.run_validator(), "change-id", "REQ-001-07")
+
+    def test_ticket_numbering_REQ_007_03_REQ_001_02(self):
+        self.fx.set_numbering("ticket")
+        ch = self.fx.add_change("ABC-123", "passwordless_login")
+        self.fx.add_tests_mentioning(self.fx.change_ids("ABC-123"))
+        self.assert_clean()
+        self.assertIn("REQ-ABC-123-01", (ch.path / "requirements.md").read_text())
+        self.fx.set_numbering("sequential")
+        self.assert_violation(self.run_validator(), "change-dirname", "REQ-001-02", path="ABC-123-passwordless_login")
+        self.assertEqual({"repo": "payments-api", "change": "ABC-123", "req": "REQ-01"}, V.parse_reference("payments-api:ABC-123/REQ-01"))
 
     def test_number_collision_REQ_003_06_REQ_001_03_REQ_001_18(self):
         self.fx.add_change("012", "first")

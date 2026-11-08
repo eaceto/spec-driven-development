@@ -78,7 +78,7 @@ Change directories are `NNN-name_of_change`: three digits, a dash, then lowercas
 
 In a team, two people can pick the same number on separate branches. The claim rule prevents it: **the first thing merged to the main branch for a change is its directory with `spec.md` alone.** The number is taken at that moment. If two claims collide, the one merged later is renumbered. A validator flags duplicates.
 
-Documented variant: `numbering: ticket` in the constitution, where the directory is `ABC-123-name_of_change` and the number comes from your tracker. The validator does not accept this form yet; it is planned as a later change, so use sequential numbering until then.
+Documented variant: `numbering: ticket` in the constitution, where the directory is `ABC-123-name_of_change`, the change id is the tracker key `ABC-123`, and requirement ids are `REQ-ABC-123-01` onward. The validator accepts this form when the constitution says so.
 
 ## Ownership and approval
 
@@ -157,7 +157,7 @@ Across repositories a change is `repo-name:014` and a requirement is `repo-name:
 - The loading rule for agents and people: constitution, index, one change, and only the capabilities that change lists.
 - The archive is cold storage. Nothing loads it unless asked.
 
-Documented variant: once a project passes roughly thirty active capabilities, group capability folders by domain, such as `capabilities/payments/refunds/`. Do not group earlier. The validator does not accept nested capability folders yet; it is planned together with the ticket numbering variant.
+Capabilities are a flat list. If a project ever has so many that a flat list fails, that is the moment to design grouping, with the validator changed alongside; the method does not pre-empt it.
 
 ## Adopting in an existing project
 
