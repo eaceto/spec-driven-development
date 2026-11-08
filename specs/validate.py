@@ -525,6 +525,59 @@ def check_change_files(project: Project, ch: Change) -> Iterator[Violation]:
             yield Violation(ch.rel, "change-files", ["REQ-001-04"], f"{ch.tier} change lacks {missing}")
 
 
+# --- spec.md order and frontmatter ---
+
+@rule("spec-order", ["REQ-001-06"], "spec.md sections in order, with at least one non-goal under Scope / Out", "change")
+def check_spec_order(project: Project, ch: Change) -> Iterator[Violation]:
+    if not ch.spec_lines:
+        return
+    path = f"{ch.rel}/spec.md"
+    sections = _h2_sections(ch.spec_lines)
+    h2 = [s[0] for s in sections]
+    ok = h2[:4] == SPEC_SECTIONS and (len(h2) == 4 or (len(h2) == 5 and h2[4] == SPEC_OPTIONAL_SECTION))
+    if not ok:
+        yield Violation(path, "spec-order", ["REQ-001-06"],
+                        f"sections are {h2}; expected {SPEC_SECTIONS} then optionally '{SPEC_OPTIONAL_SECTION}'")
+    scope = next(((lo, hi) for name, lo, hi in sections if name == "Scope"), None)
+    if scope is None:
+        return
+    in_out, bullets = False, 0
+    for line in ch.spec_lines[scope[0]:scope[1]]:
+        h3 = H3_RE.match(line)
+        if h3:
+            in_out = h3.group(1) == "Out"
+        elif in_out and re.match(r"^- \S", line):
+            bullets += 1
+    if bullets == 0:
+        yield Violation(path, "spec-order", ["REQ-001-06"], "Scope needs an Out subsection with at least one non-goal")
+
+
+@rule("spec-frontmatter", ["REQ-001-07", "REQ-001-16", "REQ-001-17"],
+      "spec.md frontmatter: fields present, status and tier valid, dates well formed, approval fields set once approved", "change")
+def check_spec_frontmatter(project: Project, ch: Change) -> Iterator[Violation]:
+    if "spec.md" not in ch.files:
+        return
+    path = f"{ch.rel}/spec.md"
+    if ch.fm_error:
+        yield Violation(path, "spec-frontmatter", ["REQ-001-07"], ch.fm_error)
+        return
+    for key in CHANGE_FM_KEYS:
+        if key not in ch.fm:
+            yield Violation(path, "spec-frontmatter", ["REQ-001-07"], f"missing field {key}")
+    if ch.status not in STATUSES:
+        yield Violation(path, "spec-frontmatter", ["REQ-001-16"], f"status {ch.status!r} is not one of {STATUSES}")
+    if ch.tier not in TIER_FILES:
+        yield Violation(path, "spec-frontmatter", ["REQ-001-07"], f"tier {ch.tier!r} is not one of {sorted(TIER_FILES)}")
+    if not isinstance(ch.fm.get("capabilities", []), list):
+        yield Violation(path, "spec-frontmatter", ["REQ-001-07"], "capabilities must be a list like [auth, billing]")
+    for key in ("approved_at", "created", "updated"):
+        value = str(ch.fm.get(key, ""))
+        if value and not DATE_RE.match(value):
+            yield Violation(path, "spec-frontmatter", ["REQ-001-07"], f"{key} must be YYYY-MM-DD, got {value!r}")
+    if ch.status in STATUSES[1:] and (not ch.fm.get("approved_by") or not ch.fm.get("approved_at")):
+        yield Violation(path, "spec-frontmatter", ["REQ-001-17"], f"status {ch.status} requires approved_by and approved_at")
+
+
 # ---------------------------------------------------------------------------
 # Running
 
