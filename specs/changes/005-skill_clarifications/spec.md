@@ -25,13 +25,14 @@ Clarify the skill texts and one template without changing any requirement:
 
 - `sdd-init` asks its questions before creating files, leaves a `.gitkeep` in `capabilities/`, `changes/` and `archive/` so the folders survive a commit, says that agent configuration and the installed skills do not count as source code when picking the mode, says what to write under Principles and Definitions when a team has none yet, tells the agent to read `sdd_version` from the SKILL.md file when its tool hides frontmatter, marks the Capabilities table step as existing-project only, and states the one-page limit as 80 lines.
 - `sdd-init`, `sdd-new` and `sdd-plan` say to remove the templates' guidance comments as sections are filled.
+- `sdd-new` says that when the answers name a person rather than a team, `owner` is the constitution's owner; that the tier is proposed by the skill and confirmed in one line rather than asked open; that the constraints section may be omitted; that `capabilities` uses the `[a, b]` form; and that the skill does not commit, so its report tells the person to commit `spec.md` alone as the claim.
 - The constitution template's first amendment row uses `none` in the Change column, since the initial constitution comes from no change.
 
 ## Scope
 
 ### In
 
-- Text edits to `skills/sdd-init/SKILL.md`, `skills/sdd-new/SKILL.md`, `skills/sdd-plan/SKILL.md`
+- Text edits to `skills/sdd-init/SKILL.md`, `skills/sdd-new/SKILL.md`, `skills/sdd-plan/SKILL.md`, informed by the first two fresh tutorial runs
 - The amendment row in `specs/templates/constitution.md`
 
 ### Out
