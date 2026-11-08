@@ -565,7 +565,7 @@ class TestGitAndSkills(ValidatorCase):
         self.assert_violation(self.run_validator(), "skills", "REQ-002-01", text="lines, limit 150")
         skill.write_text(base.replace("name: sdd-new", "name: sdd-start"))
         self.assert_violation(self.run_validator(), "skills", "REQ-002-01", text="name is 'sdd-start'")
-        skill.write_text(base.replace("  sdd_version: 0.1.0\n", ""))
+        skill.write_text(re.sub(r"^  sdd_version: .*\n", "", base, flags=re.M))
         self.assert_violation(self.run_validator(), "skills", "REQ-002-01", text="missing metadata.sdd_version")
 
 
